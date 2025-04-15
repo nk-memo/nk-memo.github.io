@@ -1,15 +1,66 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>nk memo</title>
   <style>
-    body { font-family: sans-serif; background: #f4f4f4; padding: 2em; }
-    h1 { color: #333; }
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      max-width: 720px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    h1 {
+      font-size: 1.6em;
+      border-bottom: 1.5px solid #ccc;
+      padding-bottom: 0.9em;
+  margin-bottom: 1.2em; /* ← ここ追加！ */
+  text-align: center; /* ← 追加！ */
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+li {
+  margin: 1em 0;
+  position: relative;
+  padding-left: 1.5em; /* ← ここで全体の左インデント */
+}
+li::before {
+  content: "-";
+  position: absolute;
+  left: 0.5em; /* ← ここで「-」の位置を少し右にずらす */
+  color: #444;
+}
+    a {
+      text-decoration: none;
+      color: #0066cc;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: #666;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h1></h1>
-  <p></p>
+  <h1>nk memo</h1>
+  <ul>
+    <li><b>001></b></li>
+    <li><a href="t0.html">AIと作ったWebページ</a></li>
+    <li><a href="t0.html#t2">まとめるテキスト</a></li>
+    <li><a href="t0.html#t3">1999年の自己紹介より</a></li>
+  </ul>
+
+  <footer>
+    &copy; <a href="https://nk-v.weebly.com/archive.html" target="_blank" rel="noopener">nk</a>
+  </footer>
 </body>
 </html>
