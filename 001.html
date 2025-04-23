@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+<meta property="og:locale" content="ja_JP" />
     <title>nk memo 001</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="AIと作ったWebページ | まとめるテキスト | 1999年の自己紹介より" />
@@ -20,6 +21,7 @@
       {
         "@context": "https://schema.org",
         "@type": "Article",
+        "@id": "https://nk-memo.github.io/001.html",
         "headline": "nk memo 001",
         "datePublished": "2025-04-15",
         "dateModified": "2025-04-15",
@@ -82,6 +84,10 @@
         font-size: 1rem;
         flex: 1;
         text-align: center;
+      }
+
+      .nav-link.center {
+      text-align: center;
       }
 
       .scroll-to-top {
@@ -158,7 +164,7 @@
     <main>
       <article id="t1" aria-label="AIと作ったWebページ">
         <h2>AIと作ったWebページ</h2>
-        <time datetime="2025-04-15">25.4.15</time>
+        <time datetime="2025-04-15">2025.4.15</time>
         <div class="body-text">
 45歳と46歳の間でラインを引き、人生を前半と後半に。
 
@@ -188,14 +194,14 @@
               "@type": "Organization",
               "name": "nk"
             },
-            "mainEntityOfPage": "https://nk-memo.github.io/001.html#t1"
+            "mainEntityOfPage": "https://nk-memo.github.io/001.html"
           }
         </script>
       </article>
 
       <article id="t2" aria-label="まとめるテキスト">
         <h2>まとめるテキスト</h2>
-        <time datetime="2025-04-15">25.4.15</time>
+        <time datetime="2025-04-15">2025.4.15</time>
         <div class="body-text">
 終活で "テキストをまとめる" と言っても、いざ始めてみると 何をまとめる？ 状態。
 
@@ -223,14 +229,14 @@
               "@type": "Organization",
               "name": "nk"
             },
-            "mainEntityOfPage": "https://nk-memo.github.io/001.html#t2"
+            "mainEntityOfPage": "https://nk-memo.github.io/001.html"
           }
         </script>
       </article>
 
       <article id="t3" aria-label="1999年の自己紹介より">
         <h2>1999年の自己紹介より</h2>
-        <time datetime="2025-04-15">25.4.15</time>
+        <time datetime="2025-04-15">2025.4.15</time>
         <div class="body-text">
 インターネットアーカイブ Wayback Machine を利用すると、過去のWebサイトを確認できる可能性が高いので、自身のサイトURLを覚えている方は一度覗いてみると良いかもしれません。 リンクも当時の他サイトに繋がるので、ネットサーフィンが止まらなくなります（長い夜に ^^
 
@@ -292,7 +298,7 @@
               "@type": "Organization",
               "name": "nk"
             },
-            "mainEntityOfPage": "https://nk-memo.github.io/001.html#t3"
+            "mainEntityOfPage": "https://nk-memo.github.io/001.html"
           }
         </script>
       </article>
@@ -310,10 +316,13 @@
       <a class="nav-link" href="002.html">次へ</a>
     </nav>
 
-    <button class="scroll-to-top" aria-label="ページトップに戻る" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑</button>
 
     <footer>
-        &copy; 2025 <a href="https://nk-v.weebly.com/archive.html" target="_blank" rel="noopener noreferrer">nk</a>
+      <p>&copy; 2025 <a href="https://nk-memo.github.io/">nk memo</a></p>
     </footer>
+
+    <button class="scroll-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" aria-label="トップへスクロール">
+      ↑
+    </button>
   </body>
 </html>
