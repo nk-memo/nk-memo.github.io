@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週1回の有酸素運動の効果</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .section-bg {
+      background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+    }
+    .chart-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .compact-chart {
+      max-width: 300px; /* Reduced size for compact pie chart */
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl font-bold">週1回の有酸素運動で健康を</h1>
+      <p class="mt-2 text-lg">効果、推奨時間、効果的な実践方法をチェック</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Benefits Section -->
+    <section class="section-bg rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-4">週1回有酸素運動の効果</h2>
+      <p class="mb-4">週1回の有酸素運動でも、「全くしない」より確実に健康に良い！以下のようなメリットが期待できます：</p>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>健康維持</strong>: 心肺機能の向上、血圧・血糖値の改善、ストレス軽減</li>
+        <li><strong>体力向上</strong>: 持久力アップで毎日がもっと楽に</li>
+        <li><strong>メンタルヘルス</strong>: ストレス解消や気分向上</li>
+        <li><strong>運動習慣の第一歩</strong>: 継続がカギ！週1回は素晴らしいスタート</li>
+        <li><strong>ダイエット</strong>: 効果は限定的だが、60分以上の中強度運動で「何もしない」より効果大</li>
+      </ul>
+      <!-- Infographic: Benefits Chart -->
+      <div class="chart-container mt-6">
+        <canvas id="benefitsChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Recommended Time and Intensity -->
+    <section class="section-bg rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-4">推奨される時間と強度</h2>
+      <p class="mb-4">効果を最大化するための目安はこちら：</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="text-lg font-medium">時間</h3>
+          <p>健康維持：30〜45分<br>ダイエット：60分以上<br>1回30〜60分の中強度運動が理想</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium">強度</h3>
+          <p>中強度（ややキツいと感じる、会話がギリギリできるレベル）<br>例: 軽い息切れがあるウォーキングやサイクリング</p>
+        </div>
+      </div>
+      <!-- Infographic: Compact Time Chart -->
+      <div class="compact-chart mt-6">
+        <canvas id="timeChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Tips for Effectiveness -->
+    <section class="section-bg rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-4">効果を高めるポイント</h2>
+      <ol class="list-decimal list-inside space-y-2">
+        <li><strong>継続が大事</strong>: 忙しくても週1回を続けることが重要</li>
+        <li><strong>好きな運動を</strong>: ウォーキング、サイクリング、水泳など楽しみながら</li>
+        <li><strong>頻度を増やす</strong>: 慣れたら週2〜3回にステップアップ</li>
+        <li><strong>強度を意識</strong>: 中強度で効果を最大化</li>
+        <li><strong>HIITや筋トレ併用</strong>: 短時間で高い効果を</li>
+        <li><strong>日常生活で動く</strong>: 階段を使うなど活動量を増やす</li>
+      </ol>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="section-bg rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-4">まとめ</h2>
+      <p>週1回の有酸素運動は健康維持や運動習慣の確立に最適な第一歩。30〜60分の中強度運動を継続し、慣れたら頻度を増やすことでさらに効果アップ！食事管理と組み合わせればダイエットにも貢献。無理なく楽しみながら、健康な生活を始めましょう！</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white py-4">
+    <div class="container mx-auto px-4 text-center">
+      <p>健康な未来へ、週1回からスタート！</p>
+    </div>
+  </footer>
+
+  <!-- Chart.js Script -->
+  <script>
+    // Benefits Chart
+    const benefitsCtx = document.getElementById('benefitsChart').getContext('2d');
+    new Chart(benefitsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['心肺機能', '血圧・血糖', 'ストレス軽減', '体力向上', 'メンタルヘルス'],
+        datasets: [{
+          label: '効果の大きさ（イメージ）',
+          data: [80, 75, 70, 65, 70],
+          backgroundColor: 'rgba(59, 130, 246, 0.6)',
+          borderColor: 'rgba(59, 130, 246, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true, max: 100, title: { display: true, text: '効果（%）' } }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Compact Time Chart
+    const timeCtx = document.getElementById('timeChart').getContext('2d');
+    new Chart(timeCtx, {
+      type: 'pie',
+      data: {
+        labels: ['健康維持 (30-45分)', 'ダイエット (60分以上)'],
+        datasets: [{
+          data: [45, 55],
+          backgroundColor: ['rgba(59, 130, 246, 0.6)', 'rgba(34, 197, 94, 0.6)'],
+          borderColor: ['rgba(59, 130, 246, 1)', 'rgba(34, 197, 94, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: { 
+          legend: { 
+            position: 'bottom',
+            labels: { font: { size: 12 } } // Smaller font for legend
+          }
+        },
+        layout: {
+          padding: 10
+        }
+      }
+    });
+  </script>
+</body>
+</html>
