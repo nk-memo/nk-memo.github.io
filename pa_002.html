@@ -28,6 +28,10 @@
             padding: 0;
         }
 
+        html { /* 追加: iOSでの慣性スクロールのため */
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             font-family: var(--font-family-sans-jp);
             line-height: 1.7;
@@ -35,7 +39,10 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            /* min-height: 100vh; を変更 */
+            height: 100vh; /* bodyの高さをビューポートに固定 */
+            overflow-y: auto; /* bodyの内容が溢れたら縦スクロール */
+            overflow-x: hidden; /* 横スクロールは常に非表示 */
         }
 
         .container {
@@ -53,6 +60,7 @@
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* bodyがflexコンテナなので、headerが縮まないように */
         }
 
         header h1 {
@@ -68,7 +76,7 @@
         }
         
         .header-title-icon {
-            width: 1.8em; /* Increase size - adjust as needed */
+            width: 1.8em;
             height: auto;
             margin-right: 0.3em; 
             vertical-align: middle; 
@@ -89,6 +97,7 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             margin-bottom: 30px;
+            flex-shrink: 0; /* bodyがflexコンテナなので、navが縮まないように */
         }
 
         nav ul {
@@ -333,7 +342,7 @@
             color: #E0E0E0;
             text-align: center;
             padding: 25px 0;
-            margin-top: auto; 
+            flex-shrink: 0; /* bodyがflexコンテナなので、footerが縮まないように */
         }
 
         footer p {
