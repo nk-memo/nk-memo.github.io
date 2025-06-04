@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年上半期 国内新発売スマートフォン比較</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>2025年上半期 国内新発売スマートフォン比較</h1>
+        <p class="note">
+            <strong>注意:</strong> このWebアプリケーションは、2025年1月～5月に日本国内で新発売が<u>予想される</u>スマートフォンに関する<u>サンプルデータ</u>を使用しています。実際の製品情報とは異なります。
+        </p>
+
+        <div class="controls">
+            <div class="filter-group">
+                <h2>絞り込み</h2>
+                <div class="filter-item">
+                    <label for="os-filter">OS:</label>
+                    <select id="os-filter">
+                        <option value="">すべて</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="manufacturer-filter">メーカー:</label>
+                    <select id="manufacturer-filter">
+                        <option value="">すべて</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="price-filter">価格帯 (円):</label>
+                    <input type="number" id="price-min-filter" placeholder="最小価格">
+                    <span>～</span>
+                    <input type="number" id="price-max-filter" placeholder="最大価格">
+                </div>
+                <div class="filter-item">
+                    <label for="raw-filter">RAW撮影:</label>
+                    <select id="raw-filter">
+                        <option value="">すべて</option>
+                        <option value="true">有り</option>
+                        <option value="false">無し</option>
+                    </select>
+                </div>
+                <button id="reset-filters">リセット</button>
+            </div>
+
+            <div class="sort-group">
+                <h2>並び替え</h2>
+                <div class="sort-item">
+                    <label for="sort-by">基準:</label>
+                    <select id="sort-by">
+                        <option value="releaseMonth">発売月</option>
+                        <option value="price">価格</option>
+                        <option value="batteryCapacity">バッテリー容量</option>
+                    </select>
+                </div>
+                <div class="sort-item">
+                    <label for="sort-order">順序:</label>
+                    <select id="sort-order">
+                        <option value="asc">昇順</option>
+                        <option value="desc">降順</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="smartphones-table">
+                <thead>
+                    <tr>
+                        <th>OS</th>
+                        <th>メーカー</th>
+                        <th>機種名</th>
+                        <th>価格<br>(メーカー希望)</th>
+                        <th>目玉機能</th>
+                        <th>バッテリー容量</th>
+                        <th>解像度</th>
+                        <th>色空間</th>
+                        <th>カメラ性能</th>
+                        <th>RAW撮影</th>
+                        <th>発売月</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- データはJavaScriptで挿入されます -->
+                </tbody>
+            </table>
+            <p id="no-results" style="display:none; text-align:center; margin-top:20px;">該当するスマートフォンはありません。</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
