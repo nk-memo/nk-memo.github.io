@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企業VP用コメント撮影チェックリスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* カスタムチェックボックスの色 */
+        input[type="checkbox"]:checked {
+            background-color: #2563eb; /* Tailwindのblue-600 */
+            border-color: #2563eb;
+        }
+        input[type="checkbox"]:checked:hover {
+            background-color: #1d4ed8; /* Tailwindのblue-700 */
+            border-color: #1d4ed8;
+        }
+        /* スクロールバーのスタイル（任意） */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-3xl">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-700">企業VP用コメント撮影チェックリスト</h1>
+            <p class="text-sm text-slate-600 mt-2">社員の皆様がスマホで高品質なコメント映像を撮影するためのガイドです。</p>
+        </header>
+
+        <!-- タブナビゲーション -->
+        <div class="mb-6 sticky top-0 bg-slate-100 py-2 z-10 shadow-sm rounded-lg">
+            <ul class="flex border-b border-slate-300 justify-around rounded-t-lg overflow-hidden">
+                <li class="flex-1">
+                    <button data-tab="before" class="tab-button w-full p-3 sm:p-4 text-sm sm:text-base font-semibold text-slate-600 bg-slate-200 hover:bg-blue-100 focus:outline-none focus:bg-blue-500 focus:text-white transition-colors duration-200 rounded-tl-lg">撮影前</button>
+                </li>
+                <li class="flex-1">
+                    <button data-tab="during" class="tab-button w-full p-3 sm:p-4 text-sm sm:text-base font-semibold text-slate-600 bg-slate-200 hover:bg-blue-100 focus:outline-none focus:bg-blue-500 focus:text-white transition-colors duration-200">撮影中</button>
+                </li>
+                <li class="flex-1">
+                    <button data-tab="after" class="tab-button w-full p-3 sm:p-4 text-sm sm:text-base font-semibold text-slate-600 bg-slate-200 hover:bg-blue-100 focus:outline-none focus:bg-blue-500 focus:text-white transition-colors duration-200 rounded-tr-lg">撮影後</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- コンテンツエリア -->
+        <div id="before" class="tab-content bg-white p-4 sm:p-6 rounded-b-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-600 border-b pb-2">撮影前チェック</h2>
+            <div class="space-y-4">
+                <!-- 機材準備 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">1. 機材準備</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> スマートフォンのレンズは綺麗ですか？（専用クロスで拭きましょう）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> バッテリー残量は十分ですか？（フル充電が理想）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> ストレージ容量に空きはありますか？（不要なファイルは削除）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> （使用する場合）外部マイクは正しく接続されていますか？</li>
+                    </ul>
+                </div>
+                <!-- カメラ設定 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">2. カメラ設定</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> HDR機能はオフになっていますか？（多くのモニターはHDR非対応です）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 撮影モードは「ビデオ」になっていますか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 撮影解像度・フレームレートは適切ですか？（推奨：1080p/30fps または 4K/30fps）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> スマートフォンは横向き（ランドスケープモード）で固定しますか？ <strong class="ml-1 text-red-600">（推奨）</strong></li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> グリッド線を表示して構図の参考にしますか？（任意）</li>
+                    </ul>
+                </div>
+                <!-- 撮影環境 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">3. 撮影環境</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 撮影場所は静かですか？（エアコン、PCファン、窓からの騒音、他の人の声など）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 背景はスッキリしていますか？（余計な物、個人情報が特定できる物、通行人が映り込まないように）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 照明は顔全体に均等に当たっていますか？（顔に強い影、白飛び、逆光はNG）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 窓際の場合、顔が暗くならないように注意（レースカーテンなどで調整）</li>
+                    </ul>
+                </div>
+                 <!-- 被写体（自分自身） -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">4. 被写体（ご自身）</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 服装は適切ですか？（細かいチェック柄・ストライプはモアレの原因になるので避ける）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> アクセサリー類は光を反射しすぎていませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> メガネに照明や背景が映り込んでいませんか？（角度を調整）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 顔や髪型は整っていますか？（寝癖、フケなど）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 顔がテカっていませんか？（あぶらとり紙やパウダーで抑える）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 鼻毛や眉毛は整っていますか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> （任意）リハーサルで表情や話すトーンを確認しましたか？</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="during" class="tab-content bg-white p-4 sm:p-6 rounded-b-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-600 border-b pb-2">撮影中チェック</h2>
+            <div class="space-y-4">
+                <!-- 撮影開始時 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">1. 撮影開始時</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> スマートフォンを両手でしっかり持ちましたか？（脇を締めて固定）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 三脚や自撮り棒を使用する場合、しっかり固定されていますか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> カメラの録画ボタンを押しましたか？（録画ランプや画面表示を確認）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> <strong class="text-red-600">編集点：</strong>話し始める前に、2〜3秒間、無言でカメラ目線を維持しましたか？</li>
+                    </ul>
+                </div>
+                <!-- 映像・構図 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">2. 映像・構図</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> ピントは顔に合っていますか？（画面をタップして調整）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 画面内で顔の位置は適切ですか？（頭の上が空きすぎないように）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 明るさは適切ですか？（白飛びや黒つぶれがないかプレビューで確認）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 被写体の前後に強い影が出ていませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> メガネの反射や服装の乱れはありませんか？（再度確認）</li>
+                    </ul>
+                </div>
+                 <!-- 音声 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">3. 音声</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 周囲の雑音は最小限ですか？（撮影中に新たな音が発生していないか注意）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 声の大きさは適切ですか？（小さすぎたり、大きすぎて音割れしないように）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 早口になっていませんか？（聞き取りやすいスピードで）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 不要な「えー」「あのー」を多用していませんか？</li>
+                    </ul>
+                </div>
+                <!-- その他 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">4. その他</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> カメラ目線を意識していますか？（画面ではなくレンズを見る）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 自然な表情で話せていますか？（緊張しすぎないように）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> （カンペを見る場合）目線が不自然に泳いでいませんか？</li>
+                    </ul>
+                </div>
+                 <!-- 撮影終了時 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">5. 撮影終了時</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                         <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> <strong class="text-red-600">編集点：</strong>話し終わった後、すぐに顔を逸らしたりせず、2〜3秒間カメラ目線を維持しましたか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> カメラの録画停止ボタンを確実に押しましたか？</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="after" class="tab-content bg-white p-4 sm:p-6 rounded-b-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-600 border-b pb-2">撮影後チェック</h2>
+             <div class="space-y-4">
+                <!-- 映像全体の確認 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">1. 映像全体の確認</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 撮影した動画を再生して全体をチェックしましたか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 映像が途中で途切れたり、ファイルが破損していませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 手ブレは許容範囲内ですか？（気になる場合は再撮影を検討）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> ピントはずれていませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 白飛びや黒つぶれ、暗すぎる部分はありませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> モアレが発生していませんか？（服の柄など）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> メガネの映り込みは大丈夫ですか？</li>
+                    </ul>
+                </div>
+                <!-- 音声の確認 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">2. 音声の確認</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 音声はクリアに聞こえますか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 大きなノイズ（雑音）が入っていませんか？</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 声が小さすぎたり、大きすぎて割れたりしていませんか？</li>
+                    </ul>
+                </div>
+                <!-- 編集点の確認 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">3. 編集点の確認</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 冒頭と最後の無言・カメラ目線の部分はしっかり確保できていますか？</li>
+                    </ul>
+                </div>
+                <!-- 内容の確認 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">4. 内容の確認</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 伝えたい内容は全て話せましたか？（言い忘れなど）</li>
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> （もしあれば）指定された時間内に収まっていますか？</li>
+                    </ul>
+                </div>
+                <!-- 最終判断 -->
+                 <div>
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">5. 最終判断</h3>
+                    <ul class="space-y-2 pl-4 list-none">
+                        <li class="flex items-start"><input type="checkbox" class="mr-3 mt-1 h-5 w-5 rounded border-slate-400 focus:ring-blue-500"> 問題がなければOKです。気になる点があれば再撮影を検討しましょう。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="mt-8 text-center text-sm text-slate-500">
+            <p>&copy; <span id="currentYear"></span> Your Company Name. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 現在の年をフッターに表示
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // タブ切り替え機能
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // 初期状態で最初のタブをアクティブにする
+        if (tabButtons.length > 0 && tabContents.length > 0) {
+            tabButtons[0].classList.add('bg-blue-500', 'text-white');
+            tabButtons[0].classList.remove('bg-slate-200', 'text-slate-600');
+            tabContents[0].classList.add('active');
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // すべてのボタンからアクティブスタイルを削除
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('bg-blue-500', 'text-white');
+                    btn.classList.add('bg-slate-200', 'text-slate-600');
+                });
+                // クリックされたボタンにアクティブスタイルを適用
+                button.classList.add('bg-blue-500', 'text-white');
+                button.classList.remove('bg-slate-200', 'text-slate-600');
+                
+                // すべてのコンテンツを非表示
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                // 対応するコンテンツを表示
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // チェックボックスの状態をlocalStorageに保存・復元（任意）
+        // より永続的な保存が必要な場合は、サーバーサイドのデータベースなどをご検討ください。
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const appId = 'vp_shooting_checklist_app_v1_state'; // アプリ固有のID
+
+        checkboxes.forEach((checkbox, index) => {
+            const checkboxId = `${appId}_checkbox_${index}`; // 各チェックボックスにユニークなIDを付与
+
+            // ページ読み込み時にlocalStorageから状態を復元
+            if (localStorage.getItem(checkboxId) === 'true') {
+                checkbox.checked = true;
+            }
+
+            // チェックボックスの状態変更時にlocalStorageに保存
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(checkboxId, checkbox.checked);
+            });
+        });
+
+    </script>
+</body>
+</html>
