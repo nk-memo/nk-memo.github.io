@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPコメント撮影サポーター</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            padding: 0;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 1em;
+            color: #495057;
+            flex-grow: 1;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-button:hover {
+            background-color: #dee2e6;
+        }
+
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .tab-content h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .checklist {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start; /* 上揃え */
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 5px; /* ラベルと高さを合わせる */
+            min-width: 16px; /* チェックボックスのサイズ固定 */
+            min-height: 16px;
+        }
+
+        .checklist label {
+            font-size: 1em;
+            flex-grow: 1;
+        }
+        
+        .checklist label .detail {
+            display: block;
+            font-size: 0.85em;
+            color: #555;
+            margin-left: 26px; /* checkbox幅 + margin */
+            margin-top: 3px;
+        }
+
+        .important {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .placeholder {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-style: italic;
+        }
+
+        .start-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .start-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-button {
+                border-bottom: 1px solid #ccc;
+                border-radius: 0;
+            }
+            .tab-button:last-child {
+                border-bottom: none;
+            }
+            .tab-button.active {
+                border-radius: 0; /* スマホ表示では角丸を解除 */
+            }
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .checklist label {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>VPコメント撮影サポーター</h1>
+            <p>皆さん自身でVPコメントを撮影する際の注意点をまとめました。</p>
+        </header>
+
+        <div id="initial-view">
+            <p>このアプリは、企業VP用のコメント映像を社員の皆さまが自らのスマートフォンで撮影する際に、注意すべきポイントを撮影前・撮影中・撮影後に分けて確認できるガイドです。</p>
+            <p>以下のボタンを押して、撮影準備を始めましょう！</p>
+            <div class="start-button-container">
+                <button id="start-shooting-button" class="start-button">撮影準備を開始する</button>
+            </div>
+        </div>
+        
+        <div id="shooting-steps" style="display: none;">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'pre-shoot')">STEP 1: 事前準備</button>
+                <button class="tab-button" onclick="openTab(event, 'during-shoot')">STEP 2: 撮影中</button>
+                <button class="tab-button" onclick="openTab(event, 'post-shoot')">STEP 3: 撮影後</button>
+            </div>
+
+            <!-- 事前準備 タブ -->
+            <div id="pre-shoot" class="tab-content active">
+                <h2>STEP 1: 事前準備</h2>
+                <p>撮影前にこれらをチェックして、最高のコメント映像を準備しましょう！</p>
+                
+                <h3>スマートフォン設定</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="hdr-off"><label for="hdr-off">HDR撮影オフ
+                        <span class="detail">多くのモニターはHDR非対応です。HDRビデオ設定はオフに。（例: 設定 > カメラ > ビデオ撮影 > HDRビデオをオフ）※機種により異なります</span></label></li>
+                    <li><input type="checkbox" id="resolution"><label for="resolution">解像度とフレームレート
+                        <span class="detail">会社指定: <span class="placeholder">[例: 1080p / 30fps]</span> に設定。高すぎるとファイルサイズが大きくなります。</span></label></li>
+                    <li><input type="checkbox" id="storage"><label for="storage">十分な空き容量
+                        <span class="detail">最低でも <span class="placeholder">[例: 5GB]</span> 程度の空き容量があるか確認。</span></label></li>
+                    <li><input type="checkbox" id="battery"><label for="battery">バッテリー残量
+                        <span class="detail">70%以上あるか、充電しながら撮影できる環境か確認。</span></label></li>
+                    <li><input type="checkbox" id="notifications-off"><label for="notifications-off">通知オフ（機内モード推奨）
+                        <span class="detail">撮影中に通知音やバイブレーションが入らないよう、機内モードやおやすみモードに。</span></label></li>
+                    <li><input type="checkbox" id="lens-clean"><label for="lens-clean">レンズ清掃
+                        <span class="detail">カメラのレンズを柔らかい布で優しく拭く。指紋や汚れは画質を大きく低下させます。</span></label></li>
+                </ul>
+
+                <h3>撮影場所・環境</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="quiet-place"><label for="quiet-place">静かな場所
+                        <span class="detail">エアコン、換気扇、PCファン、外の騒音（車、工事、人の声）が少ない場所を選ぶ。可能なら一時的に止める。</span></label></li>
+                    <li><input type="checkbox" id="brightness"><label for="brightness">明るさ十分・均一
+                        <span class="detail">顔が暗くならないよう明るい場所を選ぶ。部屋の照明＋自然光も利用可（逆光注意）。</span></label></li>
+                    <li><input type="checkbox" id="background-clear"><label for="background-clear">背景スッキリ
+                        <span class="detail">背景に余計な物（散らかった書類、私物、動きのある物）が映らないように整理。白い壁や無地が理想。</span></label></li>
+                    <li><input type="checkbox" id="lighting-position"><label for="lighting-position">メイン照明の位置
+                        <span class="detail">顔に影ができないよう、照明はなるべく自分の正面から当たるように。真上からの照明は目の下にクマのような影ができやすい。</span></label></li>
+                    <li><input type="checkbox" id="window-position"><label for="window-position">窓の位置（自然光利用時）
+                        <span class="detail">窓を背にすると逆光で顔が暗くなります。窓に向かうか、窓が横に来るように。</span></label></li>
+                </ul>
+
+                <h3>身だしなみ・服装</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="clothing-moire"><label for="clothing-moire">モアレ防止の服装
+                        <span class="detail"><span class="important">細かいチェック柄、ストライプ、千鳥格子</span>などは映像でチラつく（モアレ）ことがあるため避ける。無地か大きな柄が推奨。</span></label></li>
+                    <li><input type="checkbox" id="clothing-logo"><label for="clothing-logo">会社ロゴ等の確認
+                        <span class="detail">会社のロゴが入った服や、逆に他社のロゴが目立つ服は避ける（会社方針による）。</span></label></li>
+                    <li><input type="checkbox" id="clothing-clean"><label for="clothing-clean">清潔感のある服装
+                        <span class="detail">シワや汚れのない、清潔感のある服装を心がける。</span></label></li>
+                    <li><input type="checkbox" id="face-shine"><label for="face-shine">顔のテカリ防止
+                        <span class="detail">必要であれば、あぶらとり紙などで顔のテカリを抑える。</span></label></li>
+                    <li><input type="checkbox" id="hair-style"><label for="hair-style">髪型
+                        <span class="detail">顔に髪がかかりすぎないよう整える。</span></label></li>
+                    <li><input type="checkbox" id="grooming"><label for="grooming">鼻毛・ヒゲなど
+                        <span class="detail">鏡で確認し、整えておく。</span></label></li>
+                    <li><input type="checkbox" id="glasses-reflection"><label for="glasses-reflection">メガネの反射注意
+                        <span class="detail">メガネに照明や窓が映り込まないか角度を調整。可能なら撮影時だけ外すか反射防止メガネを。</span></label></li>
+                </ul>
+
+                <h3>音声関連</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="mic-position"><label for="mic-position">マイク位置の確認
+                        <span class="detail">スマートフォンのマイク穴を手で塞がないように持ち方を確認。</span></label></li>
+                    <li><input type="checkbox" id="external-mic"><label for="external-mic">外部マイク（あれば）
+                        <span class="detail">ピンマイク等を使用する場合、正しく接続され、口元に近い適切な位置に装着されているか確認。</span></label></li>
+                </ul>
+
+                <h3>撮影機材の固定</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="stabilization"><label for="stabilization">手ブレ防止
+                        <span class="detail">スマホを固定できるもの（三脚、スタンド、本棚に立てかける等）を用意。手持ちの場合は脇を締め安定させる。</span></label></li>
+                </ul>
+
+                <h3>コメント内容の準備</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="content-prep"><label for="content-prep">話す内容の確認
+                        <span class="detail">事前に話す内容を整理し、何度か声に出して練習する。</span></label></li>
+                    <li><input type="checkbox" id="cue-cards"><label for="cue-cards">カンペの準備（任意）
+                        <span class="detail">カンペを見る場合、カメラレンズのすぐ横など、視線が不自然にならない位置に置く。</span></label></li>
+                </ul>
+            </div>
+
+            <!-- 撮影中 タブ -->
+            <div id="during-shoot" class="tab-content">
+                <h2>STEP 2: 撮影中</h2>
+                <p>いよいよ撮影です！以下の点に気を付けて、落ち着いて話しましょう。</p>
+
+                <h3>撮影開始時</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="landscape-mode"><label for="landscape-mode"><span class="important">横向き撮影</span>
+                        <span class="detail">スマートフォンは必ず「横向き」にして撮影してください。縦向き動画はVPには使いにくいです。</span></label></li>
+                    <li><input type="checkbox" id="record-check"><label for="record-check">録画開始確認
+                        <span class="detail">録画ボタンを押し、確実に録画が開始されたことを確認（録画時間表示など）。</span></label></li>
+                </ul>
+
+                <h3>アングル・フレーミング</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="framing-bustshot"><label for="framing-bustshot">適切な距離・画角 (バストショット)
+                        <span class="detail">顔だけでなく、胸から上が映る「バストショット」が基本。顔が画面いっぱい/小さすぎにならないよう調整。</span></label></li>
+                    <li><input type="checkbox" id="eye-level"><label for="eye-level">目線の高さ
+                        <span class="detail">カメラのレンズが自分の目の高さに来るように調整。見下ろし/見上げアングルは避ける。</span></label></li>
+                    <li><input type="checkbox" id="face-position"><label for="face-position">顔の位置
+                        <span class="detail">顔が画面の中央に来るように意識。頭の上が切れすぎたり、空間が空きすぎたりしないように。</span></label></li>
+                    <li><input type="checkbox" id="horizontal-check"><label for="horizontal-check">水平確認
+                        <span class="detail">背景の線などを目安に、カメラが傾いていないか確認。</span></label></li>
+                </ul>
+
+                <h3>撮影中のチェック</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="focus-check"><label for="focus-check">ピント
+                        <span class="detail">自分の顔にしっかりとピントが合っているか確認（多くのスマホは顔認識AFあり）。</span></label></li>
+                    <li><input type="checkbox" id="exposure-check"><label for="exposure-check">明るさ（白飛び・黒つぶれ）
+                        <span class="detail"><span class="important">顔が白く飛んでいないか</span>、逆に暗く沈んでいないか画面で確認。白い服や壁は特に注意。</span></label></li>
+                    <li><input type="checkbox" id="shake-check"><label for="shake-check">手ブレ
+                        <span class="detail">手持ちの場合は特に、スマホが揺れないようにしっかりと持つ。</span></label></li>
+                    <li><input type="checkbox" id="self-shadow"><label for="self-shadow">自分の影
+                        <span class="detail">自分の顔や体に、照明や自分自身の影が不自然に落ちていないか確認。</span></label></li>
+                    <li><input type="checkbox" id="background-shadow"><label for="background-shadow">背景の影
+                        <span class="detail">被写体の後ろの壁などに、濃い影ができていないか確認。壁から少し離れると改善されることも。</span></label></li>
+                </ul>
+                
+                <h3>コメント・話し方</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="camera-eyecontact"><label for="camera-eyecontact">カメラ目線
+                        <span class="detail">カメラのレンズを見て話す。画面に映る自分を見つめないように注意。</span></label></li>
+                    <li><input type="checkbox" id="clear-speech"><label for="clear-speech">ハキハキと話す
+                        <span class="detail">聞き取りやすい声の大きさ、速さで、ハッキリと話す。早口にならないように。</span></label></li>
+                    <li><input type="checkbox" id="natural-expression"><label for="natural-expression">自然な表情
+                        <span class="detail">緊張するかもしれませんが、できるだけリラックスして、自然な笑顔や表情を心がける。</span></label></li>
+                </ul>
+
+                <h3><span class="important">編集点の確保 (超重要)</span></h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="pause-before"><label for="pause-before">「間」の確保（開始時）
+                        <span class="detail"><span class="important">録画開始後、すぐに話し始めず、カメラ目線のまま無言で2～3秒待ってから話し始める。</span></span></label></li>
+                    <li><input type="checkbox" id="pause-after"><label for="pause-after">「間」の確保（終了時）
+                        <span class="detail"><span class="important">話し終えた後も、すぐに目線を外したり録画を止めたりせず、カメラ目線のまま無言で2～3秒待ってから録画停止。</span></span></label></li>
+                </ul>
+
+                <h3>複数テイクの推奨</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="multiple-takes"><label for="multiple-takes">撮り直しOK
+                        <span class="detail">一度で完璧に撮ろうとせず、言い間違えたり、気になった点があれば、何度か撮り直す。ベストなものを選べます。</span></label></li>
+                </ul>
+            </div>
+
+            <!-- 撮影後 タブ -->
+            <div id="post-shoot" class="tab-content">
+                <h2>STEP 3: 撮影後</h2>
+                <p>お疲れ様でした！最後に撮影した映像を確認しましょう。</p>
+
+                <h3>映像確認</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="playback-all"><label for="playback-all">全体再生
+                        <span class="detail">撮影した映像を最初から最後まで再生して確認。</span></label></li>
+                    <li><input type="checkbox" id="audio-check"><label for="audio-check">音声チェック
+                        <span class="detail">音量が小さすぎ/大きすぎないか。雑音（エアコン、ノイズ等）が大きくないか。声が割れていないか。</span></label></li>
+                    <li><input type="checkbox" id="video-check"><label for="video-check">映像チェック
+                        <span class="detail">ピントはOKか。明るさは適切か（白飛び・黒つぶれなし）。手ブレはひどくないか。メガネ反射、モアレは大丈夫か。背景に問題ないか。</span></label></li>
+                    <li><input type="checkbox" id="edit-points-check"><label for="edit-points-check">編集点チェック
+                        <span class="detail"><span class="important">前後に2～3秒の「間」が確保されているか再確認。</span></span></label></li>
+                </ul>
+
+                <h3>ファイルの準備</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="filename"><label for="filename">ファイル名（会社指定があれば）
+                        <span class="detail"><span class="placeholder">[例: 部署名_氏名_日付.mp4]</span> のように、指定されたファイル名に変更。</span></label></li>
+                    <li><input type="checkbox" id="submission-method"><label for="submission-method">ファイルの提出方法確認
+                        <span class="detail"><span class="placeholder">[担当者名]</span>さんに、<span class="placeholder">[指定された方法（例:共有ドライブへのアップロード、メール添付等）]</span>で提出。</span></label></li>
+                    <li><input type="checkbox" id="best-take"><label for="best-take">複数テイクの場合
+                        <span class="detail">最も良いテイクを選んで提出。判断に迷う場合は、複数提出して良いか担当者に確認。</span></label></li>
+                </ul>
+
+                <h3>バックアップ（推奨）</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="backup-data"><label for="backup-data">データバックアップ
+                        <span class="detail">提出前に、念のため撮影したデータを別の場所にも保存しておくことを推奨。</span></label></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.getElementById("start-shooting-button").addEventListener("click", function() {
+            document.getElementById("initial-view").style.display = "none";
+            document.getElementById("shooting-steps").style.display = "block";
+            // Optionally, open the first tab by default if it's not already active
+            document.querySelector('.tab-button').click(); // Simulate click on the first tab
+        });
+        
+        // Initialize first tab to be active if shooting-steps is shown by default (e.g. if initial view is removed)
+        // Or, ensure the first tab is marked active if no JS click simulation is used.
+        // The CSS already marks the first tab and content as active, so this might not be strictly necessary
+        // depending on initial setup. For the start button flow, the click simulation above handles it.
+    </script>
+
+</body>
+</html>
