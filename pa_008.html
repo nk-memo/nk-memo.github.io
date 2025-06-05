@@ -1,0 +1,357 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社内ビデオ撮影チェックリスト</title>
+  <style>
+    /* Tailwind CSSの代わりにカスタムCSSを直接記述 */
+    body {
+      font-family: sans-serif;
+      background-color: #f3f4f6;
+    }
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-3xl {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    .font-bold {
+      font-weight: 700;
+    }
+    .text-gray-800 {
+      color: #1f2937;
+    }
+    .text-gray-600 {
+      color: #4b5563;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .font-semibold {
+      font-weight: 600;
+    }
+    .text-gray-700 {
+      color: #374151;
+    }
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+    .flex {
+      display: flex;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .space-x-4 > * + * {
+      margin-left: 1rem;
+    }
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .bg-blue-500 {
+      background-color: #3b82f6;
+    }
+    .bg-gray-300 {
+      background-color: #d1d5db;
+    }
+    .text-white {
+      color: #ffffff;
+    }
+    .text-gray-800 {
+      color: #1f2937;
+    }
+    .rounded {
+      border-radius: 0.375rem;
+    }
+    .hover\:bg-blue-600:hover {
+      background-color: #2563eb;
+    }
+    .hover\:bg-gray-400:hover {
+      background-color: #9ca3af;
+    }
+    .space-y-3 > * + * {
+      margin-top: 0.75rem;
+    }
+    .bg-white {
+      background-color: #ffffff;
+    }
+    .shadow {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+    .checklist-item {
+      transition: all 0.3s ease;
+    }
+    .checklist-item.checked {
+      background-color: #d1fae5;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .mr-3 {
+      margin-right: 0.75rem;
+    }
+    .h-5 {
+      height: 1.25rem;
+    }
+    .w-5 {
+      width: 1.25rem;
+    }
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+    .bg-red-500 {
+      background-color: #ef4444;
+    }
+    .hover\:bg-red-600:hover {
+      background-color: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">社内ビデオ撮影チェックリスト</h1>
+    <p class="text-center text-gray-600 mb-8">社員がスマホでコメント映像を撮影する際の注意点を、事前・撮影中・撮影後に分けて確認しましょう。</p>
+
+    <!-- タブナビゲーション -->
+    <div class="flex justify-center space-x-4 mb-6">
+      <button class="tab-btn px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" data-tab="pre">撮影前</button>
+      <button class="tab-btn px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400" data-tab="during">撮影中</button>
+      <button class="tab-btn px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400" data-tab="post">撮影後</button>
+    </div>
+
+    <!-- 撮影前 -->
+    <div id="pre" class="tab-content active">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">撮影前の準備</h2>
+      <ul class="space-y-3">
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>HDR設定：多くのモニタがHDR非対応のため、スマホのHDRをオフにしてください。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>服装：モアレ防止のため、細かいチェックやストライプの服は避け、単色やシンプルな柄を選んでください。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>メイクと身だしなみ：顔のテカリを抑えるため軽くパウダーを。鼻毛や髪の乱れもチェック。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>場所選び：静かな室内を選び、エアコンや外の雑音（車、風など）が少ないか確認。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>照明準備：自然光か柔らかい照明を用意。顔に強い光や影が当たらない位置をテスト。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>機材：スマホのバッテリー残量とストレージをチェック。可能なら三脚やスタンドを用意。</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 撮影中 -->
+    <div id="during" class="tab-content">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">撮影中の注意</h2>
+      <ul class="space-y-3">
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>手ブレ：スマホを両手で持ち、肘を体につけるか三脚で固定してブレを防ぐ。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>白飛び：背景や顔が白く飛ばないよう、明るすぎる光源を避け、露出を調整。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>映り込み：メガネやガラス面に光や周囲の物が映り込んでいないか確認。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>音声：クリアな声を録るため、口から15-30cm離してマイクを向け、雑音を避ける。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>背景：被写体の前後に影や不要な物（ポスター、個人情報など）がないか確認。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>編集点：トーク前後に2-3秒、カメラを無言で正面から見て編集用の余白を確保。</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 撮影後 -->
+    <div id="post" class="tab-content">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">撮影後の確認</h2>
+      <ul class="space-y-3">
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>映像確認：白飛び、影、映り込み、顔のテカリがないか再生してチェック。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>音声確認：声が途切れず、雑音（エアコン、外の音）が目立たないか確認。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>編集点：トーク前後に2-3秒の無言の余白があり、急に顔を動かしていないか。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>画質：解像度（推奨：1080p）とフレームレート（推奨：30fps）が適切か。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>保存：ファイル名に日付と名前を入れ（例：2025-06-05_山田）、安全に保存。</span>
+          </label>
+        </li>
+        <li class="checklist-item p-4 bg-white rounded-lg shadow">
+          <label class="flex items-center">
+            <input type="checkbox" class="mr-3 h-5 w-5">
+            <span>送信：指示された方法（クラウド、メール等）で編集チームに映像を共有。</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="text-center mt-6">
+      <button id="reset-btn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">チェックをリセット</button>
+    </div>
+  </div>
+
+  <script>
+    // タブ切り替え
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-blue-500', 'text-white');
+          t.classList.add('bg-gray-300', 'text-gray-800');
+        });
+        tab.classList.remove('bg-gray-300', 'text-gray-800');
+        tab.classList.add('bg-blue-500', 'text-white');
+
+        contents.forEach(content => content.classList.remove('active'));
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // チェックボックス状態管理
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const item = checkbox.parentElement.parentElement;
+        if (checkbox.checked) {
+          item.classList.add('checked');
+        } else {
+          item.classList.remove('checked');
+        }
+      });
+    });
+
+    // リセットボタン
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+        checkbox.parentElement.parentElement.classList.remove('checked');
+      });
+    });
+  </script>
+</body>
+</html>
