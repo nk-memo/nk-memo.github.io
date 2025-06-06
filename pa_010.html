@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI時代の企業映像戦略ダッシュボード</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-color: #f4f7fc;
+            --card-bg: #ffffff;
+            --primary-color: #0a3d62;
+            --secondary-color: #3c6382;
+            --accent-color: #4a90e2;
+            --text-color: #333333;
+            --light-text-color: #666666;
+            --border-color: #e0e6ed;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        
+        .card-header .icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .card-content p, .card-content ul {
+            color: var(--light-text-color);
+        }
+
+        .card-content ul {
+            padding-left: 20px;
+            list-style-type: '✓  ';
+        }
+        
+        .card-content li::marker {
+            color: var(--accent-color);
+        }
+
+        /* --- 修正：ここからタブ関連スタイルを削除し、セクション表示用のスタイルを追加 --- */
+        .content-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .content-section:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title .icon {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-right: 12px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .content-box {
+            background-color: #f9fafc;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .content-box h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        /* --- 修正：ここまで --- */
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .strategy-card h3 {
+             color: var(--accent-color);
+        }
+        
+        .strategy-card h3 .icon {
+            margin-right: 10px;
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .conclusion h2, .conclusion .card-header .icon {
+            color: white;
+        }
+        .conclusion p, .conclusion li {
+            color: rgba(255,255,255,0.9);
+        }
+        .conclusion li::marker {
+            color: #fff;
+        }
+        .conclusion strong {
+            color: #fff;
+            background-color: rgba(255,255,255,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>AI時代の企業映像戦略</h1>
+        </header>
+
+        <main class="main-grid">
+            <!-- なぜリアルが重要か -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <h2>なぜ今、改めて「リアル」が重要なのか？</h2>
+                </div>
+                <div class="card-content">
+                    <p>AIが生成するコンテンツは「最大公約数的な最適解」や「理想化された虚構」です。それに対し、企業が発信する「リアル」には、AIには決して生み出せない独自の価値があります。</p>
+                    <ul>
+                        <li><strong>信頼性の源泉:</strong> フェイクが溢れる中、「本物である」こと自体が強力な信頼の証となります。</li>
+                        <li><strong>共感のトリガー:</strong> 予定調和ではない、生身の人間の表情や少しの不器用さといった「ノイズ」が共感を呼び起こします。</li>
+                        <li><strong>ブランドの証明:</strong> 理念や哲学は言葉だけでは伝わりません。実際の行動や現場の様子こそが、その企業を最も雄弁に物語ります。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 具体的な発信内容 -->
+            <div class="card">
+                <div class="card-header">
+                     <span class="icon"><i class="fas fa-bullseye"></i></span>
+                    <h2>何を、どう発信するべきか？</h2>
+                </div>
+                <div class="card-content">
+
+                    <!-- Section: 人 -->
+                    <div class="content-section">
+                        <h3 class="section-title"><span class="icon"><i class="fas fa-users"></i></span>【人】で共感を</h3>
+                        <p>企業の最も根源的な資産は「人」です。人のストーリーは、最も共感を呼びやすいコンテンツになります。</p>
+                        <div class="content-grid">
+                            <div class="content-box">
+                                <h3>何を？（What）</h3>
+                                <ul>
+                                    <li>開発者の情熱と苦悩</li>
+                                    <li>現場のプロフェッショナリズム</li>
+                                    <li>顧客の率直な成功体験（証言）</li>
+                                    <li>経営者のビジョンと原体験</li>
+                                </ul>
+                            </div>
+                            <div class="content-box">
+                                <h3>どう？（How）</h3>
+                                <ul>
+                                    <li><strong>課題解決ドキュメンタリー:</strong> 「不可能と言われた開発。救ったのは入社3年目の社員の一言だった。」</li>
+                                    <li><strong>A Day in the Life:</strong> 「〇〇職のリアルな一日」と題し、出社から退社までを追う。</li>
+                                    <li><strong>師弟対談:</strong> ベテランと若手が技術や想いを語り合う。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: モノ・コト -->
+                    <div class="content-section">
+                        <h3 class="section-title"><span class="icon"><i class="fas fa-cogs"></i></span>【モノ・コト】で納得を</h3>
+                        <p>製品やサービスが生まれる「プロセス」そのものが、品質や価値を伝える強力なストーリーになります。</p>
+                        <div class="content-grid">
+                            <div class="content-box">
+                                <h3>何を？（What）</h3>
+                                <ul>
+                                    <li>製造工程の全貌（神は細部に宿る）</li>
+                                    <li>品質管理の裏側（厳しいチェック基準）</li>
+                                    <li>R&D（研究開発）の挑戦</li>
+                                    <li>無形サービスの提供現場</li>
+                                </ul>
+                            </div>
+                            <div class="content-box">
+                                <h3>どう？（How）</h3>
+                                <ul>
+                                    <li><strong>How It's Made形式:</strong> 「1本のネジが製品になるまで」などミクロな視点で解説。</li>
+                                    <li><strong>Before/After:</strong> 顧客の課題と、自社サービスによる解決後を具体的に見せる。</li>
+                                    <li><strong>こだわり解剖:</strong> 「なぜ、この部品にチタンを使うのか？」技術者が熱く語る。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: 思想・文化 -->
+                    <div class="content-section">
+                        <h3 class="section-title"><span class="icon"><i class="fas fa-heart"></i></span>【思想・文化】でファンを</h3>
+                        <p>企業の価値観や存在意義を伝え、単なる顧客や従業員ではなく「ファン」を育てます。</p>
+                        <div class="content-grid">
+                            <div class="content-box">
+                                <h3>何を？（What）</h3>
+                                <ul>
+                                    <li>創業ストーリー（苦労と想い）</li>
+                                    <li>ミッション・ビジョン・バリューの実践</li>
+                                    <li>誠実な失敗談の共有</li>
+                                    <li>社内イベントや部活動の素顔</li>
+                                </ul>
+                            </div>
+                            <div class="content-box">
+                                <h3>どう？（How）</h3>
+                                <ul>
+                                    <li><strong>アーカイブ・ドキュメンタリー:</strong> 会社の歴史のターニングポイントを深掘りする。</li>
+                                    <li><strong>トップ×現場社員の対話:</strong> 会社の未来や課題をフラットに語り合う。</li>
+                                    <li><strong>社会貢献活動レポート:</strong> 「利益をどう社会に還元しているか」を具体的に報告。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 発信フォーマット -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="icon"><i class="fas fa-share-alt"></i></span>
+                    <h2>発信フォーマットとBtoB企業への示唆</h2>
+                </div>
+                <div class="card-content strategy-grid">
+                    <div class="strategy-card">
+                        <h3><i class="fas fa-bolt icon"></i>ショート動画の役割</h3>
+                        <p><strong>目的：出会いと興味喚起</strong></p>
+                        <p>TikTok, YouTube Shorts, Reelsで、コンテンツの「ハイライト」「ティザー」「切り抜き」を1分以内で見せ、新たな顧客層との接点を生み出します。</p>
+                        <p><strong>例:</strong>「ベテラン職人の神業3選」「1分でわかる！〇〇の製造工程」</p>
+                    </div>
+                    <div class="strategy-card">
+                        <h3><i class="fas fa-film icon"></i>長尺動画の役割</h3>
+                        <p><strong>目的：理解促進と信頼構築</strong></p>
+                        <p>YouTubeや公式サイトで、背景やストーリーをじっくりと語り、深い理解と納得感、そしてファン化を促します。企業の信頼性を物語る資産となります。</p>
+                        <p><strong>例:</strong>ドキュメンタリー、対談、詳細な技術解説</p>
+                    </div>
+                </div>
+                 <div class="card-content">
+                    <p><strong>BtoB企業への示唆：</strong>意思決定者も個人としてはショート動画を見ています。ショートで興味を引き、長尺でじっくりと納得させるハイブリッド戦略が有効です。専門知識の解説なども効果的です。</p>
+                </div>
+            </div>
+
+            <!-- 結論 -->
+            <div class="card conclusion">
+                 <div class="card-header">
+                    <span class="icon"><i class="fas fa-check-circle"></i></span>
+                    <h2>結論：AI時代の最強の戦略とは</h2>
+                </div>
+                <div class="card-content">
+                    <p>従来の主軸である「丁寧なリアル紹介」は本質的に正しいですが、「何もしなくていい」という意味ではありません。進化させるべきは<strong>「伝え方」</strong>です。</p>
+                     <ul>
+                        <li><strong>物語性の強化:</strong> 単なる紹介ではなく、視聴者が感情移入できるストーリーとして再構成する。</li>
+                        <li><strong>マルチフォーマット展開:</strong> 1つのネタを、長尺、ショート、ブログ記事など多様な形式で届け先を最適化する。</li>
+                        <li><strong>双方向性の意識:</strong> コメントや質問に誠実に答え、「リアルな対話」で信頼を深める。</li>
+                    </ul>
+                    <p>AIが作る「完璧な虚構」が溢れるからこそ、企業は<strong>「不完全だが、信頼できる現実」</strong>を、より魅力的なストーリーとして語る技術を磨くべき時代になったと言えるでしょう。</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© nk / MYMAP. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- 修正：タブ機能が不要になったため、scriptタグを削除 -->
+
+</body>
+</html>
