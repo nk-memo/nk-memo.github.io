@@ -8,12 +8,14 @@
         body {
             background-color: #222;
             font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', sans-serif;
+            /* 【スマホ対応修正1】コンテンツが画面を超えた場合にスクロールできるよう修正 */
+            min-height: 100vh; /* heightから変更 */
+            margin: 0;
+            /* overflow: hidden; を削除 */
+            
+            /* 【スマホ対応修正2】中央揃えの方法を変更し、コンテンツが多くても上から表示されるように修正 */
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
         }
 
         .departure-board {
@@ -24,6 +26,10 @@
             width: 90%;
             max-width: 600px;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            /* 【スマホ対応修正3】上下にマージンを追加して見やすくする */
+            margin: 20px auto;
+            /* 【スマホ対応修正4】自身の高さをコンテンツに合わせる */
+            height: fit-content;
         }
 
         .board-title {
@@ -47,7 +53,6 @@
             padding: 10px;
             border-radius: 5px;
             opacity: 0;
-            /* 【変更点2】アニメーションの開始位置をより右に */
             transform: translateX(100px);
             animation: slide-in 0.6s ease-out forwards;
         }
@@ -64,7 +69,7 @@
         @keyframes slide-in {
             from {
                 opacity: 0;
-                transform: translateX(100px); /* 開始位置を調整 */
+                transform: translateX(100px);
             }
             to {
                 opacity: 1;
@@ -85,8 +90,8 @@
             width: 140px;
             color: #fff;
             font-weight: bold;
-            /* 【変更点1】時刻の左側に余白を追加 */
             padding-left: 10px;
+            flex-shrink: 0; /* 【スマホ対応修正5】縮まないように設定 */
         }
 
         .train-type {
@@ -96,8 +101,8 @@
             width: 80px;
             padding: 5px 0;
             font-weight: bold;
-            /* 【変更点1】種別の右側に余白を追加 */
             margin-right: 20px;
+            flex-shrink: 0; /* 【スマホ対応修正5】縮まないように設定 */
         }
 
         .type-local { background-color: #808080; color: #fff; }
@@ -111,6 +116,40 @@
             text-align: left;
             color: #fff;
             font-weight: bold;
+            /* 【スマホ対応修正6】文字がはみ出た場合に改行させず「...」で省略 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 【スマホ対応修正7】画面幅が600px以下の時に適用されるスタイルを追加 */
+        @media (max-width: 600px) {
+            .departure-board {
+                width: 95%;
+                padding: 10px;
+            }
+            .board-title {
+                font-size: 1.3em;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+            }
+            .train-row {
+                padding: 8px;
+            }
+            .train-time {
+                font-size: 1.3em; /* 文字を小さく */
+                width: 100px; /* 幅を狭く */
+                padding-left: 5px; /* 余白を狭く */
+                letter-spacing: 1px;
+            }
+            .train-type {
+                font-size: 1em; /* 文字を小さく */
+                width: 65px; /* 幅を狭く */
+                margin-right: 8px; /* 余白を狭く */
+            }
+            .train-destination {
+                font-size: 1.1em; /* 文字を小さく */
+            }
         }
     </style>
 </head>
@@ -166,7 +205,7 @@
                         row.classList.add('next-departure');
                     }
                     
-                    // 【変更点3】アニメーションの遅延を0.5秒ずつに設定
+                    // アニメーションの遅延は元のまま（0.5秒ずつ）で動作します
                     row.style.animationDelay = `${index * 0.5}s`;
                     
                     row.innerHTML = `
