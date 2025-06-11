@@ -123,18 +123,25 @@
 
     <script>
         const timetableData = [
-            { id: 1, time: "08:00", type: "普通", destination: "港南台", class: "type-local" },
-            { id: 2, time: "09:30", type: "急行", destination: "本郷台", class: "type-express" },
-            { id: 3, time: "10:10", type: "普通", destination: "戸塚", class: "type-local" },
-            { id: 4, time: "11:50", type: "快速", destination: "金沢文庫", class: "type-rapid" },
-            { id: 5, time: "13:00", type: "特急", destination: "東戸塚", class: "type-limited-express" },
-            { id: 6, time: "14:40", type: "普通", destination: "上永谷", class: "type-local" },
-            { id: 7, time: "15:25", type: "急行", destination: "いずみ中央", class: "type-express" },
-            { id: 8, time: "16:10", type: "快速", destination: "上大岡", class: "type-rapid" },
-            { id: 9, time: "17:00", type: "特急", destination: "洋光台", class: "type-limited-express" },
-            { id: 10, time: "18:00", type: "普通", destination: "大船", class: "type-local" }	,
-            { id: 11, time: "19:30", type: "急行", destination: "港南中央", class: "type-express" },			
-            { id: 12, time: "21:05", type: "快速", destination: "能見台", class: "type-rapid" },			
+            { id: 16, time: "08:00", type: "普通", destination: "［始発］磯子・汐見台", class: "type-local" },
+            { id: 17, time: "08:00", type: "快速", destination: "下永谷・平戸", class: "type-rapid" },			
+            { id: 18, time: "08:00", type: "急行", destination: "福浦・朝比奈", class: "type-express" },			
+            { id: 19, time: "08:00", type: "特急", destination: "中田・弥生台", class: "type-limited-express" },			
+            { id: 1, time: "08:00", type: "普通", destination: "港南台・庄戸", class: "type-local" },
+            { id: 2, time: "09:30", type: "急行", destination: "本郷台・小山台", class: "type-express" },
+            { id: 3, time: "10:10", type: "普通", destination: "戸塚・立場", class: "type-local" },
+            { id: 4, time: "11:50", type: "快速", destination: "金沢文庫・並木", class: "type-rapid" },
+            { id: 5, time: "13:00", type: "特急", destination: "東戸塚・舞岡", class: "type-limited-express" },
+            { id: 6, time: "14:40", type: "普通", destination: "上永谷・平戸", class: "type-local" },
+            { id: 7, time: "15:25", type: "急行", destination: "いずみ中央・緑園都市", class: "type-express" },
+            { id: 8, time: "16:10", type: "快速", destination: "上大岡・岡村", class: "type-rapid" },
+            { id: 9, time: "17:00", type: "特急", destination: "洋光台・野庭団地", class: "type-limited-express" },
+            { id: 10, time: "18:00", type: "普通", destination: "大船・桂台", class: "type-local" }	,
+            { id: 11, time: "19:30", type: "急行", destination: "港南中央・芹が谷", class: "type-express" },			
+            { id: 12, time: "21:05", type: "快速", destination: "能見台・上中里", class: "type-rapid" },			
+            { id: 13, time: "22:40", type: "特急", destination: "ゆめが丘・原宿", class: "type-limited-express" },		
+            { id: 14, time: "23:25", type: "普通", destination: "日限山・小菅ケ谷", class: "type-local" },		
+            { id: 15, time: "24:00", type: "急行", destination: "［最終］新杉田・京急富岡", class: "type-express" },		
         ];
 
         const displayElement = document.getElementById('timetable-display');
