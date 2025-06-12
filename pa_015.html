@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>横浜市南部 神社検索</title>
+    <style>
+        /* --- 基本スタイル --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- ヘッダー --- */
+        header {
+            background-color: #4a5a8a;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #333c5e;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+        }
+
+        /* --- フィルターエリア --- */
+        #filters {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .filter-group select, .filter-group button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            background-color: #fff;
+        }
+
+        .filter-group button {
+            background-color: #d9534f;
+            color: white;
+            border-color: #d43f3a;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .filter-group button:hover {
+            background-color: #c9302c;
+        }
+
+        /* --- 結果表示エリア --- */
+        #results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        #results-count {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        #data-notice {
+            font-size: 0.8em;
+            color: #666;
+            text-align: right;
+        }
+
+        #shrine-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .shrine-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .shrine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .shrine-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.4em;
+            color: #333c5e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .shrine-card .ward-badge {
+            font-size: 0.7em;
+            font-weight: normal;
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .shrine-card p {
+            margin: 0 0 8px;
+            font-size: 0.9em;
+        }
+        .shrine-card strong {
+            color: #555;
+            min-width: 60px;
+            display: inline-block;
+        }
+
+        .shrine-card .map-link {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #5cb85c;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .shrine-card .map-link:hover {
+            background-color: #4cae4c;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>横浜市南部 神社検索</h1>
+        <p>泉区・栄区・戸塚区・金沢区・港南区・磯子区の神社</p>
+    </header>
+
+    <div class="container">
+        <div id="filters">
+            <div class="filter-group">
+                <label for="ward-filter">区で絞り込み</label>
+                <select id="ward-filter">
+                    <option value="all">すべての区</option>
+                    <option value="金沢区">金沢区</option>
+                    <option value="磯子区">磯子区</option>
+                    <option value="港南区">港南区</option>
+                    <option value="戸塚区">戸塚区</option>
+                    <option value="栄区">栄区</option>
+                    <option value="泉区">泉区</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="deity-filter">ご祭神で絞り込み</label>
+                <select id="deity-filter">
+                    <option value="all">すべてのご祭神</option>
+                    <!-- ご祭神はJSで動的に追加されます -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="founded-filter">創建時代で絞り込み</label>
+                <select id="founded-filter">
+                    <option value="all">すべての時代</option>
+                    <option value="era1">平安時代以前 (〜1184年)</option>
+                    <option value="era2">鎌倉・室町時代 (1185〜1572年)</option>
+                    <option value="era3">安土桃山・江戸時代 (1573〜1867年)</option>
+                    <option value="era4">明治以降 (1868年〜)</option>
+                    <option value="unknown">不詳</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label> </label>
+                <button id="reset-button">リセット</button>
+            </div>
+        </div>
+
+        <div id="results-header">
+            <span id="results-count"></span>
+            <span id="data-notice">※データは主要な神社を抜粋したものです</span>
+        </div>
+        <div id="shrine-list">
+            <!-- 検索結果はJSで動的に表示されます -->
+        </div>
+    </div>
+
+    <script>
+    // --- 神社データ ---
+    // name: 神社名
+    // ward: 区名
+    // address: 住所
+    // deities: ご祭神 (配列)
+    // founded: 創建年 (西暦)。不明な場合は null
+    // founded_text: 創建年のテキスト表記
+    const shrines = [
+        { name: "瀬戸神社", ward: "金沢区", address: "横浜市金沢区瀬戸18-14", deities: ["大山祇命", "速須佐之男尊", "徳川家康"], founded: 1180, founded_text: "治承4年（1180年）" },
+        { name: "富岡八幡宮", ward: "金沢区", address: "横浜市金沢区富岡東4-5-41", deities: ["応神天皇"], founded: 1241, founded_text: "仁治2年（1241年）頃" },
+        { name: "琵琶島神社 (瀬戸神社境内社)", ward: "金沢区", address: "横浜市金沢区瀬戸", deities: ["市杵島姫命"], founded: 1180, founded_text: "治承4年（1180年）" },
+        { name: "龍華寺(鎮守) 秋葉社", ward: "金沢区", address: "横浜市金沢区洲崎町13-12", deities: ["火之迦具土大神"], founded: null, founded_text: "不詳" },
+        { name: "杉田八幡宮", ward: "磯子区", address: "横浜市磯子区杉田5-2-1", deities: ["応神天皇"], founded: null, founded_text: "不詳（江戸時代初期以前）" },
+        { name: "岡村天満宮", ward: "磯子区", address: "横浜市磯子区岡村2-13-11", deities: ["菅原道真"], founded: 1104, founded_text: "長治元年（1104年）" },
+        { name: "根岸八幡神社", ward: "磯子区", address: "横浜市磯子区西町1-1", deities: ["応神天皇"], founded: null, founded_text: "不詳" },
+        { name: "磯子八幡宮", ward: "磯子区", address: "横浜市磯子区磯子8-13-3", deities: ["応神天皇"], founded: null, founded_text: "不詳" },
+        { name: "日野春日神社", ward: "港南区", address: "横浜市港南区日野中央2-9-5", deities: ["天児屋根命", "武甕槌命"], founded: null, founded_text: "不詳" },
+        { name: "永谷天満宮", ward: "港南区", address: "横浜市港南区上永谷5-1-5", deities: ["菅原道真"], founded: 1032, founded_text: "長元5年（1032年）" },
+        { name: "笹下稲荷社", ward: "港南区", address: "横浜市港南区笹下3-28-13", deities: ["宇迦之御魂神"], founded: 1591, founded_text: "天正19年（1591年）" },
+        { name: "港南ひまわり地蔵尊", ward: "港南区", address: "横浜市港南区港南中央通7", deities: ["子育地蔵尊"], founded: 1980, founded_text: "昭和55年（1980年）" },
+        { name: "戸塚八坂神社", ward: "戸塚区", address: "横浜市戸塚区戸塚町4188", deities: ["素盞嗚尊"], founded: null, founded_text: "不詳（元禄以前）" },
+        { name: "冨塚八幡宮", ward: "戸塚区", address: "横浜市戸塚区戸塚町4188", deities: ["応神天皇"], founded: 1051, founded_text: "永承6年（1051年）" },
+        { name: "舞岡八幡宮", ward: "戸塚区", address: "横浜市戸塚区舞岡町1837", deities: ["応神天皇"], founded: 1689, founded_text: "元禄2年（1689年）" },
+        { name: "汲沢神明社", ward: "戸塚区", address: "横浜市戸塚区汲沢町1078", deities: ["天照大御神"], founded: 1600, founded_text: "慶長5年（1600年）頃" },
+        { name: "王子神社", ward: "戸塚区", address: "横浜市戸塚区下倉田町361", deities: ["天照大御神", "月読命"], founded: null, founded_text: "不詳" },
+        { name: "長沼宗社", ward: "栄区", address: "横浜市栄区長沼町327", deities: ["天照大御神"], founded: null, founded_text: "不詳" },
+        { name: "飯島神明社", ward: "栄区", address: "横浜市栄区飯島町1856", deities: ["天照大御神"], founded: null, founded_text: "不詳" },
+        { name: "上郷猿田彦大神", ward: "栄区", address: "横浜市栄区上郷町1309", deities: ["猿田彦大神"], founded: null, founded_text: "不詳" },
+        { name: "杉山神社", ward: "栄区", address: "横浜市栄区小菅ケ谷2-23-10", deities: ["日本武尊"], founded: null, founded_text: "不詳" },
+        { name: "御霊神社", ward: "栄区", address: "横浜市栄区上之町23-2", deities: ["鎌倉権五郎景政"], founded: null, founded_text: "不詳（平安時代後期）" },
+        { name: "宇佐元宮", ward: "泉区", address: "横浜市泉区和泉町4718", deities: ["応神天皇"], founded: null, founded_text: "不詳" },
+        { name: "白百合嶋神社", ward: "泉区", address: "横浜市泉区和泉町6311", deities: ["木花咲耶姫命"], founded: null, founded_text: "不詳" },
+        { name: "四ノ宮諏訪神社", ward: "泉区", address: "横浜市泉区下飯田町1336", deities: ["建御名方神"], founded: null, founded_text: "不詳" },
+        { name: "御霊神社", ward: "泉区", address: "横浜市泉区中田町3362", deities: ["鎌倉権五郎景政"], founded: null, founded_text: "不詳" },
+        { name: "神明社", ward: "泉区", address: "横浜市泉区新橋町513", deities: ["天照大御神"], founded: 1690, founded_text: "元禄3年（1690年）" },
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const wardFilter = document.getElementById('ward-filter');
+        const deityFilter = document.getElementById('deity-filter');
+        const foundedFilter = document.getElementById('founded-filter');
+        const resetButton = document.getElementById('reset-button');
+        const shrineList = document.getElementById('shrine-list');
+        const resultsCount = document.getElementById('results-count');
+
+        // 1. ご祭神フィルターの選択肢を動的に生成
+        function populateDeityFilter() {
+            const allDeities = new Set();
+            shrines.forEach(shrine => {
+                shrine.deities.forEach(deity => allDeities.add(deity));
+            });
+            const sortedDeities = Array.from(allDeities).sort();
+            sortedDeities.forEach(deity => {
+                const option = document.createElement('option');
+                option.value = deity;
+                option.textContent = deity;
+                deityFilter.appendChild(option);
+            });
+        }
+
+        // 2. 神社リストを表示する関数
+        function displayShrines(filteredShrines) {
+            shrineList.innerHTML = '';
+            filteredShrines.forEach(shrine => {
+                const mapLink = `https://www.google.com/maps?q=${encodeURIComponent(shrine.address)}`;
+                
+                const card = document.createElement('div');
+                card.className = 'shrine-card';
+                card.innerHTML = `
+                    <h3>${shrine.name}<span class="ward-badge">${shrine.ward}</span></h3>
+                    <p><strong>住　所：</strong>${shrine.address}</p>
+                    <p><strong>ご祭神：</strong>${shrine.deities.join('、')}</p>
+                    <p><strong>創　建：</strong>${shrine.founded_text}</p>
+                    <a href="${mapLink}" class="map-link" target="_blank" rel="noopener noreferrer">Googleマップで見る</a>
+                `;
+                shrineList.appendChild(card);
+            });
+            resultsCount.textContent = `${filteredShrines.length}件の神社が見つかりました`;
+        }
+
+        // 3. フィルターを適用する関数
+        function applyFilters() {
+            const selectedWard = wardFilter.value;
+            const selectedDeity = deityFilter.value;
+            const selectedFounded = foundedFilter.value;
+            
+            const filtered = shrines.filter(shrine => {
+                // 区フィルター
+                const wardMatch = selectedWard === 'all' || shrine.ward === selectedWard;
+
+                // ご祭神フィルター
+                const deityMatch = selectedDeity === 'all' || shrine.deities.includes(selectedDeity);
+
+                // 創建年フィルター
+                let foundedMatch = true;
+                if (selectedFounded !== 'all') {
+                    const year = shrine.founded;
+                    switch (selectedFounded) {
+                        case 'era1': // 平安以前
+                            foundedMatch = year !== null && year <= 1184;
+                            break;
+                        case 'era2': // 鎌倉・室町
+                            foundedMatch = year !== null && year >= 1185 && year <= 1572;
+                            break;
+                        case 'era3': // 安土桃山・江戸
+                            foundedMatch = year !== null && year >= 1573 && year <= 1867;
+                            break;
+                        case 'era4': // 明治以降
+                            foundedMatch = year !== null && year >= 1868;
+                            break;
+                        case 'unknown': // 不詳
+                            foundedMatch = year === null;
+                            break;
+                    }
+                }
+
+                return wardMatch && deityMatch && foundedMatch;
+            });
+
+            displayShrines(filtered);
+        }
+
+        // 4. リセット処理
+        function resetFilters() {
+            wardFilter.value = 'all';
+            deityFilter.value = 'all';
+            foundedFilter.value = 'all';
+            applyFilters();
+        }
+
+        // 5. イベントリスナーの設定
+        wardFilter.addEventListener('change', applyFilters);
+        deityFilter.addEventListener('change', applyFilters);
+        foundedFilter.addEventListener('change', applyFilters);
+        resetButton.addEventListener('click', resetFilters);
+
+        // 初期化処理
+        populateDeityFilter();
+        applyFilters(); // 初期表示
+    });
+    </script>
+</body>
+</html>

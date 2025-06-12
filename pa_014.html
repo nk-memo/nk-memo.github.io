@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>横浜市南部 神社検索</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">横浜市南部 神社検索</h1>
+            <p class="text-gray-600 mt-2">泉区、栄区、戸塚区、金沢区、港南区、磯子区の神社を検索できます。</p>
+        </header>
+
+        <!-- Search and Filter Controls -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Filter by Kami -->
+                <div>
+                    <label for="kami-filter" class="block text-sm font-medium text-gray-700 mb-2">ご祭神で絞り込み:</label>
+                    <select id="kami-filter" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                        <option value="all">すべてのご祭神</option>
+                    </select>
+                </div>
+
+                <!-- Sort by Founding Year -->
+                <div>
+                    <label for="sort-order" class="block text-sm font-medium text-gray-700 mb-2">創建年で並び替え:</label>
+                    <select id="sort-order" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                        <option value="default">デフォルト</option>
+                        <option value="asc">古い順</option>
+                        <option value="desc">新しい順</option>
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-end">
+                    <button id="reset-button" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2.5 px-4 rounded-lg transition duration-300">
+                        リセット
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shrine List -->
+        <div id="shrine-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Shrine cards will be inserted here by JavaScript -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-12">
+            <p class="text-xl text-gray-500">該当する神社が見つかりませんでした。</p>
+        </div>
+
+        <footer class="text-center text-gray-500 mt-12 text-sm">
+            <p>※掲載データは、各神社の公式サイトや地方公共団体の情報、Wikipedia等を参考に作成しています。</p>
+            <p>※創建年には諸説ある場合や、不明なものも含まれます。完全性・正確性を保証するものではありません。</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Shrine Data ---
+        // This is the database of shrines for the specified wards.
+        const shrines = [
+            // --- 磯子区 (Isogo-ku) ---
+            { name: "岡村天満宮", address: "横浜市磯子区岡村2-13-11", kami: ["菅原道真公"], founded: 987, ward: "磯子区" },
+            { name: "杉田八幡宮", address: "横浜市磯子区杉田5-2-10", kami: ["誉田別尊"], founded: 1063, ward: "磯子区" },
+            { name: "根岸八幡神社", address: "横浜市磯子区西町1-1", kami: ["誉田別尊", "気長足姫尊", "武内宿禰命"], founded: 1250, ward: "磯子区" },
+            { name: "磯子八幡宮", address: "横浜市磯子区磯子3-5-3", kami: ["誉田別尊"], founded: 1280, ward: "磯子区" },
+
+            // --- 金沢区 (Kanazawa-ku) ---
+            { name: "瀬戸神社", address: "横浜市金沢区瀬戸18-14", kami: ["大山祇命"], founded: 1180, ward: "金沢区" },
+            { name: "富岡八幡宮", address: "横浜市金沢区富岡東4-5-41", kami: ["誉田別尊", "気長足姫尊", "比売神"], founded: 810, ward: "金沢区" },
+            { name: "六浦白山神社", address: "横浜市金沢区六浦5-1-1", kami: ["伊弉諾尊", "伊弉冉尊"], founded: null, ward: "金沢区" },
+            { name: "泥亀（でいき）神明社", address: "横浜市金沢区泥亀1-21-4", kami: ["天照大御神"], founded: 1705, ward: "金沢区" },
+            { name: "手子神社", address: "横浜市金沢区釜利谷東4-1738", kami: ["手子神"], founded: 737, ward: "金沢区" },
+
+
+            // --- 港南区 (Konan-ku) ---
+            { name: "日野春日神社", address: "横浜市港南区日野中央2-9-5", kami: ["天児屋根命", "武甕槌命", "経津主命", "姫大神"], founded: 1056, ward: "港南区" },
+            { name: "笹下稲荷社", address: "横浜市港南区笹下3-11", kami: ["宇迦之御魂神"], founded: 1533, ward: "港南区" },
+            { name: "永谷天満宮", address: "横浜市港南区上永谷5-1-15", kami: ["菅原道真公"], founded: 1493, ward: "港南区" },
+
+            // --- 戸塚区 (Totsuka-ku) ---
+            { name: "富塚八幡宮", address: "横浜市戸塚区戸塚町4138", kami: ["誉田別尊", "気長足姫尊", "比売神"], founded: 1051, ward: "戸塚区" },
+            { name: "お軽勘平戸塚の碑", address: "横浜市戸塚区戸塚町157", kami: ["お軽", "勘平"], founded: null, ward: "戸塚区" },
+            { name: "下倉田八幡社", address: "横浜市戸塚区下倉田町285", kami: ["誉田別尊"], founded: 1056, ward: "戸塚区" },
+            { name: "舞岡八幡宮", address: "横浜市戸塚区舞岡町957", kami: ["誉田別尊"], founded: 1625, ward: "戸塚区" },
+
+            // --- 栄区 (Sakae-ku) ---
+            { name: "笠間稲荷神社", address: "横浜市栄区笠間2-12-1", kami: ["宇迦之御魂神"], founded: 1689, ward: "栄区" },
+            { name: "杉山神社", address: "横浜市栄区上郷町1501", kami: ["五十猛命", "日本武尊"], founded: null, ward: "栄区" },
+            { name: "長尾神社", address: "横浜市栄区長尾台町410", kami: ["鎌倉権五郎景政"], founded: 1093, ward: "栄区" },
+            { name: "子神社（ねのじんじゃ）", address: "横浜市栄区上郷町1499", kami: ["大国主命"], founded: 1667, ward: "栄区" },
+
+            // --- 泉区 (Izumi-ku) ---
+            { name: "御霊神社", address: "横浜市泉区中田町2269", kami: ["鎌倉権五郎景政"], founded: 1093, ward: "泉区" },
+            { name: "中和田神明社", address: "横浜市泉区和泉町4718", kami: ["天照大御神"], founded: 1673, ward: "泉区" },
+            { name: "白百合神社", address: "横浜市泉区新橋町1518", kami: ["木花咲耶姫命", "素盞嗚尊"], founded: 1662, ward: "泉区" },
+            { name: "五社稲荷社", address: "横浜市泉区上飯田町2036", kami: ["宇迦之御魂神"], founded: null, ward: "泉区" },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const kamiFilter = document.getElementById('kami-filter');
+            const sortOrder = document.getElementById('sort-order');
+            const resetButton = document.getElementById('reset-button');
+            const shrineList = document.getElementById('shrine-list');
+            const noResults = document.getElementById('no-results');
+
+            /**
+             * Populates the Kami (deity) filter dropdown with unique options.
+             */
+            function populateKamiFilter() {
+                const kamiSet = new Set();
+                shrines.forEach(shrine => {
+                    shrine.kami.forEach(k => kamiSet.add(k));
+                });
+
+                const sortedKami = Array.from(kamiSet).sort((a, b) => a.localeCompare(b, 'ja'));
+                
+                sortedKami.forEach(kami => {
+                    const option = document.createElement('option');
+                    option.value = kami;
+                    option.textContent = kami;
+                    kamiFilter.appendChild(option);
+                });
+            }
+
+            /**
+             * Displays shrines based on the provided array of shrines.
+             * @param {Array} shrinesToDisplay - The array of shrine objects to display.
+             */
+            function displayShrines(shrinesToDisplay) {
+                shrineList.innerHTML = ''; // Clear previous results
+
+                if (shrinesToDisplay.length === 0) {
+                    noResults.classList.remove('hidden');
+                    shrineList.classList.add('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                    shrineList.classList.remove('hidden');
+                }
+
+                shrinesToDisplay.forEach(shrine => {
+                    const mapLink = `https://www.google.com/maps?q=${encodeURIComponent(shrine.name + ' ' + shrine.address)}`;
+                    const foundedText = shrine.founded ? `${shrine.founded}年` : '不明';
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col';
+                    card.innerHTML = `
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">${shrine.name}</h3>
+                            <p class="text-sm text-gray-500 mb-4">${shrine.ward}</p>
+                            <p class="text-gray-700 mb-2"><span class="font-semibold">住所:</span> ${shrine.address}</p>
+                            <p class="text-gray-700 mb-2"><span class="font-semibold">創建年:</span> ${foundedText}</p>
+                            <p class="text-gray-700 mb-4"><span class="font-semibold">ご祭神:</span> ${shrine.kami.join(', ')}</p>
+                        </div>
+                        <a href="${mapLink}" target="_blank" rel="noopener noreferrer" class="mt-auto block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                            Googleマップで見る
+                        </a>
+                    `;
+                    shrineList.appendChild(card);
+                });
+            }
+
+            /**
+             * Applies filters and sorting, then updates the display.
+             */
+            function updateResults() {
+                let filteredShrines = [...shrines];
+
+                // 1. Filter by Kami
+                const selectedKami = kamiFilter.value;
+                if (selectedKami !== 'all') {
+                    filteredShrines = filteredShrines.filter(shrine => shrine.kami.includes(selectedKami));
+                }
+
+                // 2. Sort by Founding Year
+                const selectedSort = sortOrder.value;
+                if (selectedSort !== 'default') {
+                    filteredShrines.sort((a, b) => {
+                        // Treat null/unknown founded years as the "latest" to sort them last
+                        const yearA = a.founded === null ? Infinity : a.founded;
+                        const yearB = b.founded === null ? Infinity : b.founded;
+
+                        if (selectedSort === 'asc') {
+                            return yearA - yearB;
+                        } else {
+                            return yearB - yearA;
+                        }
+                    });
+                }
+                
+                displayShrines(filteredShrines);
+            }
+
+            // --- Event Listeners ---
+
+            // Update results when filters or sorting change
+            kamiFilter.addEventListener('change', updateResults);
+            sortOrder.addEventListener('change', updateResults);
+
+            // Reset all filters and sorting
+            resetButton.addEventListener('click', () => {
+                kamiFilter.value = 'all';
+                sortOrder.value = 'default';
+                updateResults();
+            });
+
+            // --- Initial Load ---
+            populateKamiFilter();
+            updateResults(); // Initial display of all shrines
+        });
+    </script>
+
+</body>
+</html>
