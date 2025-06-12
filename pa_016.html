@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太陽と影のマップ（APIキー不要版）</title>
+    
+    <!-- Leaflet.js の CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    
+    <style>
+        /* 基本的なページスタイル */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* マップを画面全体に表示 */
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        /* 操作パネルのスタイル */
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 1000; /* Leafletの上に表示されるようにz-indexを設定 */
+            min-width: 300px;
+            max-width: 90%;
+            text-align: center;
+        }
+        #controls h3 {
+            margin: 0 0 10px 0;
+        }
+        #controls p {
+            margin: 5px 0;
+        }
+        #time-slider {
+            width: 100%;
+        }
+    </style>
+    <!-- 太陽位置計算ライブラリ (SunCalc.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+    <!-- Leaflet.js の JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+</head>
+<body>
+
+    <div id="controls">
+        <h3>太陽と影のシミュレーター</h3>
+        <p id="location-name">場所: ...</p>
+        <p id="current-time">時刻: --:--</p>
+        <input type="range" id="time-slider" min="0" max="1439" step="1">
+        <p id="sun-info">太陽高度: ---° / 方位: ---°</p>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        const today = new Date();
+        let map;
+        let centerMarker;
+        let sunLine;
+        let shadowLine;
+        let currentPosition = {}; // 緯度経度を保持するグローバル変数
+
+        // 東京駅の緯度経度（フォールバック用）
+        const tokyoStationPosition = { lat: 35.681236, lng: 139.767125 };
+
+        // --- 1. 位置情報の取得を試みる ---
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // 成功時：取得した位置情報で地図を初期化
+                    currentPosition = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    document.getElementById('location-name').innerText = "場所: 現在地";
+                    initializeMap(currentPosition);
+                },
+                () => {
+                    // 失敗時（ユーザーが拒否した場合など）：東京駅で初期化
+                    alert("位置情報の取得に失敗しました。デフォルトの場所（東京駅）で表示します。");
+                    currentPosition = tokyoStationPosition;
+                    document.getElementById('location-name').innerText = "場所: 東京駅";
+                    initializeMap(currentPosition);
+                }
+            );
+        } else {
+            // Geolocation非対応ブラウザ：東京駅で初期化
+            alert("お使いのブラウザは位置情報機能に対応していません。デフォルトの場所（東京駅）で表示します。");
+            currentPosition = tokyoStationPosition;
+            document.getElementById('location-name').innerText = "場所: 東京駅";
+            initializeMap(currentPosition);
+        }
+        
+        // --- 2. 地図と各種要素を初期化する関数 ---
+        function initializeMap(position) {
+            // Leafletでマップを作成
+            map = L.map('map').setView([position.lat, position.lng], 17);
+
+            // 国土地理院の航空写真タイルを追加
+            L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+                attribution: '© <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
+                maxZoom: 18,
+            }).addTo(map);
+
+            // マーカーを設置
+            centerMarker = L.marker([position.lat, position.lng]).addTo(map)
+                .bindPopup(document.getElementById('location-name').innerText)
+                .openPopup();
+
+            // --- 時刻スライダーの処理 ---
+            const timeSlider = document.getElementById('time-slider');
+            const now = new Date();
+            const minutes = now.getHours() * 60 + now.getMinutes();
+            timeSlider.value = minutes;
+
+            timeSlider.addEventListener('input', (e) => {
+                const newMinutes = parseInt(e.target.value, 10);
+                const newTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, newMinutes);
+                updateSunPosition(newTime);
+            });
+
+            // 初期表示を実行
+            updateSunPosition(now);
+        }
+
+        // --- 3. 太陽と影の描画処理 ---
+        function updateSunPosition(date) {
+            const lat = currentPosition.lat;
+            const lng = currentPosition.lng;
+
+            const sunPos = SunCalc.getPosition(date, lat, lng);
+            const sunAltitude = sunPos.altitude * 180 / Math.PI;
+            const sunAzimuth = sunPos.azimuth * 180 / Math.PI;
+
+            document.getElementById('current-time').innerText = `時刻: ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+            document.getElementById('sun-info').innerText = `太陽高度: ${sunAltitude.toFixed(1)}° / 方位: ${sunAzimuth.toFixed(1)}°`;
+            
+            const sunHeading = sunAzimuth + 180;
+            const shadowHeading = (sunAzimuth + 180 + 180) % 360;
+
+            if (sunLine) map.removeLayer(sunLine);
+            if (shadowLine) map.removeLayer(shadowLine);
+            
+            if (sunAltitude <= 0) return;
+
+            const shadowLength = 200 / Math.tan(sunPos.altitude);
+
+            const sunPathEnd = calculateDestination(lat, lng, sunHeading, 500); 
+            const shadowPathEnd = calculateDestination(lat, lng, shadowHeading, shadowLength);
+            
+            const sunPath = [[lat, lng], [sunPathEnd.lat, sunPathEnd.lng]];
+            const shadowPath = [[lat, lng], [shadowPathEnd.lat, shadowPathEnd.lng]];
+
+            sunLine = L.polyline(sunPath, { color: '#FFD700', weight: 4, opacity: 0.8 }).addTo(map);
+            shadowLine = L.polyline(shadowPath, { color: '#000000', weight: 5, opacity: 0.6 }).addTo(map);
+        }
+
+        // --- ヘルパー関数 (緯度経度計算) ---
+        function calculateDestination(startLat, startLng, bearing, distance) {
+            const R = 6371e3;
+            const brng = toRadians(bearing);
+            const lat1 = toRadians(startLat);
+            const lon1 = toRadians(startLng);
+
+            const lat2 = Math.asin(Math.sin(lat1) * Math.cos(distance / R) +
+                Math.cos(lat1) * Math.sin(distance / R) * Math.cos(brng));
+
+            const lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(distance / R) * Math.cos(lat1),
+                Math.cos(distance / R) - Math.sin(lat1) * Math.sin(lat2));
+
+            return { lat: toDegrees(lat2), lng: toDegrees(lon2) };
+        }
+        function toRadians(d) { return d * Math.PI / 180; }
+        function toDegrees(r) { return r * 180 / Math.PI; }
+
+    </script>
+</body>
+</html>
