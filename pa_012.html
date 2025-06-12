@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>色空間シミュレーター（sRGB表示）</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    .description {
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+      font-size: 14px;
+      color: #444;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .panel {
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      width: 300px;
+      position: relative;
+    }
+    .panel img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+    .compare-slider {
+      width: 100%;
+      margin: 10px 0;
+    }
+    input[type="file"] {
+      margin: 20px auto;
+      display: block;
+    }
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+    @media (max-width: 600px) {
+      .panel {
+        width: 90%;
+      }
+    }
+    .info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>色空間シミュレーター（sRGBモニタ想定）</h1>
+  <div class="description">
+    <p>このアプリでは、画像をsRGBモニター上で様々な色空間で見た場合を近似的に再現します。下記に画像をアップロードすると、各色空間の疑似表示が生成されます。画像をクリックすると拡大表示できます。</p>
+  </div>
+  <input type="file" id="upload" accept="image/*">
+  <div class="container" id="gallery"></div>
+
+  <div id="modal" onclick="this.style.display='none'">
+    <img id="modal-img" src="">
+  </div>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const upload = document.getElementById('upload');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    const profiles = [
+      { name: 'sRGB', filter: 'none', info: '標準的なWeb表示色空間' },
+      { name: 'Display P3（疑似）', filter: 'saturate(1.1) contrast(1.05)', info: 'Appleデバイスなどで採用される広色域色空間' },
+      { name: 'Adobe RGB（疑似）', filter: 'saturate(1.15) hue-rotate(5deg)', info: '印刷やプロ向け用途で使用される色空間' },
+      { name: 'NTSC（疑似）', filter: 'saturate(1.2) brightness(1.05)', info: '古いテレビ放送基準に基づいた広色域色空間' },
+      { name: 'DCI-P3（疑似）', filter: 'saturate(1.1) hue-rotate(-5deg)', info: 'デジタルシネマ用の標準色空間' },
+      { name: 'Rec.2020（疑似）', filter: 'saturate(1.25) contrast(1.1)', info: 'UHDTV用の超広色域色空間' },
+      { name: 'ProPhoto RGB（疑似）', filter: 'saturate(1.4) contrast(0.95)', info: '写真現像で用いられる超広色域色空間' },
+      { name: 'ACES（疑似）', filter: 'brightness(1.1) contrast(1.2)', info: '映像業界向けの標準色空間' },
+      { name: 'BT.2100（PQ,疑似HDR風）', filter: 'brightness(1.2) contrast(1.3) saturate(1.2)', info: 'HDR映像用の色空間（PQ方式）' }
+    ];
+
+    upload.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        gallery.innerHTML = '';
+        profiles.forEach(profile => {
+          const panel = document.createElement('div');
+          panel.className = 'panel';
+
+          const h3 = document.createElement('h3');
+          h3.textContent = profile.name;
+
+          const img = document.createElement('img');
+          img.src = reader.result;
+          img.style.filter = profile.filter;
+          img.alt = profile.name;
+          img.onclick = () => {
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+            modalImg.style.filter = img.style.filter;
+          };
+
+          const info = document.createElement('div');
+          info.className = 'info';
+          info.textContent = profile.info;
+
+          panel.appendChild(h3);
+          panel.appendChild(img);
+          panel.appendChild(info);
+
+          gallery.appendChild(panel);
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
