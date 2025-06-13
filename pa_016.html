@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>太陽と影のマップ</title>
+    <title>太陽と影のシミュレーター</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -79,11 +79,22 @@
                 min-width: 280px;
             }
             #search-container {
-                /* 検索フォームを操作パネルの下に移動 */
+                /* 検索フォームを左下に移動 */
                 top: auto;
                 bottom: 10px;
                 left: 10px;
             }
+            /* ▼▼▼ 今回の修正箇所 ▼▼▼ */
+            /* 地図切り替えボタンのコンテナを、スマホでは左下に移動 */
+            .leaflet-top.leaflet-right {
+                /* デフォルトの右上配置を解除 */
+                top: auto;
+                right: auto;
+                /* 検索フォームの上に配置 */
+                bottom: 75px; /* 検索フォームの高さ(約55px) + マージン(20px) */
+                left: 10px;
+            }
+            /* ▲▲▲ 今回の修正箇所 ▲▲▲ */
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
@@ -109,6 +120,7 @@
     <div id="map"></div>
 
     <script>
+        // JavaScript部分は前回から変更ありません
         const today = new Date();
         let map;
         let centerMarker;
@@ -125,21 +137,17 @@
         const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
         
-        // --- UIコントロールの配置と設定 ---
         const baseMaps = {
             "<span>航空写真</span>": gsiPhotoLayer,
             "<span>標準地図</span>": osmLayer
         };
         gsiPhotoLayer.addTo(map);
         
-        // 1. レイヤー切り替えを右上に、展開した状態で配置
         L.control.layers(baseMaps, null, { position: 'topright', collapsed: false }).addTo(map);
-        // 2. ズームボタンを右下に配置
         L.control.zoom({ position: 'bottomright' }).addTo(map);
         
         centerMarker = L.marker([currentPosition.lat, currentPosition.lng]).addTo(map);
 
-        // --- イベントリスナー ---
         map.on('click', function(e) {
             updateLocation(e.latlng, `緯${e.latlng.lat.toFixed(4)}, 経${e.latlng.lng.toFixed(4)}`);
         });
@@ -183,14 +191,6 @@
             if (e.key === 'Enter') searchLocation();
         });
 
-        // --- 共通の更新処理 ---
-        function updateLocation(newPosition, displayName) { /* ... (変更なし) ... */ }
-        function updateSunPosition(date) { /* ... (変更なし) ... */ }
-        function calculateDestination(startLat, startLng, bearing, distance) { /* ... (変更なし) ... */ }
-        function toRadians(d) { return d * Math.PI / 180; }
-        function toDegrees(r) { return r * 180 / Math.PI; }
-
-        // --- 変更のない関数をここに展開 ---
         function updateLocation(newPosition, displayName) {
             currentPosition = newPosition;
             centerMarker.setLatLng(newPosition);
@@ -235,8 +235,9 @@
             const lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(distance / R) * Math.cos(lat1), Math.cos(distance / R) - Math.sin(lat1) * Math.sin(lat2));
             return { lat: toDegrees(lat2), lng: toDegrees(lon2) };
         }
+        function toRadians(d) { return d * Math.PI / 180; }
+        function toDegrees(r) { return r * 180 / Math.PI; }
 
-        // --- 初期表示 ---
         updateSunPosition(now);
     </script>
 </body>
