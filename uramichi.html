@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OpenRouteService 裏道サイクリングナビ（最終完成版）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; font-family: sans-serif; }
+    #map { height: 100%; }
+    #instructions {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="instructions">出発地点をクリックしてください</div>
+
+<script>
+  // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  // ★ 重要：このAPIキーは公開されてしまいました。念のため、後で新しいキーに差し替えることをお勧めします ★
+  // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  const orsApiKey = '5b3ce3597851110001cf624899c1590637ea47de9b4d929e9437ccd5';
+
+  const map = L.map('map').setView([35.387, 139.589], 14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  let startMarker, endMarker, routeLine;
+  let startLatLng = null;
+  const instructions = document.getElementById('instructions');
+
+  function resetRoute() {
+    if (startMarker) map.removeLayer(startMarker);
+    if (endMarker) map.removeLayer(endMarker);
+    if (routeLine) map.removeLayer(routeLine);
+    startLatLng = null;
+    startMarker = null;
+    endMarker = null;
+    routeLine = null;
+    instructions.textContent = "出発地点をクリックしてください";
+    instructions.style.color = 'black';
+  }
+
+  map.on('click', function(e) {
+    if (!startLatLng) {
+      resetRoute(); // 新しいルート検索の前にリセット
+      startLatLng = e.latlng;
+      startMarker = L.marker(startLatLng).addTo(map);
+      instructions.textContent = "到着地点をクリックしてください";
+    } else {
+      if (endMarker) map.removeLayer(endMarker); // 到着マーカーを更新
+      endMarker = L.marker(e.latlng).addTo(map);
+      instructions.textContent = "究極の裏道を検索中...";
+      fetchRoute(startLatLng, e.latlng);
+    }
+  });
+
+  function fetchRoute(start, end) {
+    const url = 'https://api.openrouteservice.org/v2/directions/cycling-regular/geojson';
+
+    // 古いルートがあれば削除
+    if (routeLine) {
+      map.removeLayer(routeLine);
+    }
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': orsApiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        coordinates: [
+          [start.lng, start.lat],
+          [end.lng, end.lat]
+        ],
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        // ★ 【解決策①】「おすすめ」ルートを選択し、より裏道優先に            ★
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        preference: 'recommended', 
+        
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        // ★ 【解決策②】サーバーのルール通り、「options」で囲む            ★
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        options: {
+          avoid_features: ['ferries', 'steps'] 
+        }
+      })
+    })
+    .then(res => {
+        if (!res.ok) {
+            // エラーレスポンスの場合は、ここで処理を中断させる
+            throw new Error('サーバーからエラーが返されました: ' + res.status);
+        }
+        return res.json();
+    })
+    .then(data => {
+      // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+      // ★ 【解決策③】ルートが見つからなかった場合のエラー処理を追加        ★
+      // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+      if (!data.features || data.features.length === 0) {
+        throw new Error('ルートデータが見つかりません。');
+      }
+      const coords = data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+      routeLine = L.polyline(coords, { color: 'deeppink', weight: 5 }).addTo(map);
+      map.fitBounds(routeLine.getBounds());
+      if(startMarker) map.removeLayer(startMarker);
+      if(endMarker) map.removeLayer(endMarker);
+      instructions.textContent = "裏道ルートが表示されました！ 地図を再クリックでリセット。";
+    })
+    .catch(err => {
+      console.error(err);
+      instructions.textContent = "ルート取得に失敗しました。地点を変えてお試しください。";
+      instructions.style.color = 'red';
+      // 失敗したらマーカーをリセットしてやり直せるように
+      setTimeout(resetRoute, 3000); 
+    });
+  }
+
+  // 地図をダブルクリックでもリセットできるように
+  map.on('dblclick', resetRoute);
+</script>
+
+</body>
+</html>
