@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「交通空白」解消パイロット・プロジェクト 第4弾</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        h1, h2, h3 {
+            line-height: 1.4;
+            color: #1a237e; /* 濃紺 */
+        }
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+            border-bottom: 2px solid #3949ab; /* 紺 */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            background-color: #e8eaf6; /* 薄い青紫 */
+            padding: 10px 15px;
+            border-left: 5px solid #3949ab;
+            margin-top: 40px;
+        }
+        h3 {
+            font-size: 1.2em;
+            color: #3949ab;
+            border-bottom: 1px dotted #7986cb; /* 薄い紺 */
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        p, ul {
+            margin-bottom: 1em;
+            text-align: left;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        .header-info {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .project-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .project-card summary {
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 15px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            outline: none;
+            display: block;
+        }
+        .project-card[open] summary {
+            background-color: #e0e0e0;
+        }
+        .project-card .details-content {
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid #ddd;
+        }
+        .project-card .details-content h4 {
+            font-size: 1.05em;
+            color: #1a237e;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        .label {
+            display: inline-block;
+            background-color: #3949ab;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 8px;
+            font-weight: normal;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: #eee;
+            font-size: 0.9em;
+        }
+        footer p {
+            margin: 0.5em 0;
+        }
+        footer .issuer {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>「交通空白」解消<br>パイロット・プロジェクト 第4弾</h1>
+            <div class="header-info">
+                <p>発行日: 令和7年6月16日</p>
+                <p>発行元: 国土交通省</p>
+            </div>
+        </header>
+
+        <main>
+            <section id="gaiyou">
+                <h2>1. 概要</h2>
+                <p>国土交通省は、「『交通空白』解消・官民連携プラットフォーム」のもと、全国で共通の課題を抱える自治体や交通事業者と、解決策を持つパートナー企業等が連携・協働するプロジェクトを推進しています。</p>
+                <p>この度、第4弾として新たに5事業を採択し、既存のものと合わせて計10件のプロジェクトが発表されました。これらのプロジェクトを通じて得られた知見は、本年秋頃に報告され、全国展開が推進される予定です。</p>
+            </section>
+
+            <section id="mokuteki">
+                <h2>2. プロジェクトの目的と重点分野</h2>
+                <p>本プロジェクトは、人口減少や働き手不足が加速する中で、地方創生の基盤である地域交通を守るため、<strong>「持続可能な地域交通の『新しいカタチ』」</strong>を官民で創出することを目的としています。2030年頃を見据え、全国で実装可能な新しい仕組みの構築を目指します。</p>
+                <p>令和7年度は、以下の5つの分野を重点テーマとしています。</p>
+                <ul>
+                    <li><b>働き手不足に負けない「強い」事業基盤の構築</b></li>
+                    <li><b>若者や女性に選ばれる「楽しい」地域交通</b></li>
+                    <li><b>ナショナル・リソースを活用した共創（連携・協働）の推進</b></li>
+                    <li><b>観光二次交通や情報発信の充実</b></li>
+                    <li><b>喫緊の特定課題への対応</b></li>
+                </ul>
+            </section>
+
+            <section id="projects">
+                <h2>3. 第4弾発表プロジェクト（計10件）</h2>
+                
+                <h3>3.1. 働き手不足に負けない「強い」事業基盤の構築 (4件)</h3>
+                
+                <details class="project-card">
+                    <summary>① 過疎地版交通マネジメント組織の立ち上げ</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>広島県北部地区</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>過疎地域における交通の総合的なマネジメント組織を構築し、多様な担い手の確保や一括した運営の仕組みを構築します。これを手順書（マニュアル）化し、全国展開を目指します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>過疎地では、交通全体を企画する人材やライドシェアの担い手が不足しており、運行・安全管理や配車システムのコストが課題となっています。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>庄原商工会議所、順風路、備北交通、長大、呉高専 他</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>② 官民連携による地域人材を活用した交通空白解消</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>福岡県北九州市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>地域住民を乗合交通「おでかけ交通」のドライバーとして活用し、持続可能な交通体系を構築します。また、アプリ予約の導入など利便性向上も図ります。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>北九州市では高齢化と運転手不足でバス路線の維持が困難になっており、「おでかけ交通」の担い手確保が喫緊の課題です。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>第一交通産業、西鉄バス北九州、ネクスト・モビリティ、北九州市 他</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>③ ダイヤ貼替業務省力化プロジェクト</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>長崎県長崎市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>バス車両とバス停間でデータを送受信する「SIMレスバス停システム」を開発し、ダイヤ改正や情報発信を効率化します。人流データを活用した最適なダイヤ案の策定支援も行います。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>ダイヤ改正時の時刻表貼替作業や、通信型デジタルバス停の通信コストが大きな負担となっており、柔軟なダイヤ改正が困難な状況でした。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>小田原機器、MaaS Tech Japan、長崎自動車 他</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>④ QRコードによるチケット認証の標準化プロジェクト</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>熊本県熊本市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>異なる鉄道・バス事業者が発行するQRコードを、MaaSアプリ等で相互に認証できるハブシステムと標準APIを開発します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>交通事業者ごとにQRコード認証システムが異なり、MaaSアプリを介した広域利用が困難であることが課題でした。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>トヨタファイナンシャルサービス、日本信号、九州旅客鉄道、九州産交バス 他</p>
+                    </div>
+                </details>
+
+                <h3>3.2. 若者や女性に選ばれる「楽しい」地域交通 (1件)</h3>
+
+                <details class="project-card">
+                    <summary>⑤ 学生やスタートアップと連携した地域交通コミュニティの形成</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>東京都、広島県、福岡市、福井県鯖江市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>学生中心のアイディアソンやピッチイベントを通じて、交通空白解消のための新しいアイデアを募集します。特に女子大学生の視点から移動実態を分析し、持続可能な地域づくりを提案します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>地域交通の持続可能性のためには、若い世代を巻き込み、新たな視点からの政策提案や人材育成が求められています。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>角川アスキー総合研究所、津田塾大学 他</p>
+                    </div>
+                </details>
+
+                <h3>3.3. ナショナル・リソースを活用した共創 (4件)</h3>
+
+                <details class="project-card">
+                    <summary>⑥ 介護送迎のリソースシェア×介護予防に向けた外出機会の創出</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>兵庫県神戸市、香川県三豊市、滋賀県野洲市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>複数の通所介護施設の送迎業務を共同化し、介護人材不足を解消します。さらに、日中の遊休車両を活用して高齢者の外出を支援し、介護予防に繋げます。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>介護施設では運転業務の負担と職員不足が課題です。一方で、高齢者の外出機会の創出は介護予防に効果的とされています。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>ダイハツ工業、神戸国際医療交流財団、CSK 他</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>⑦ 地方新聞社が主導する地域交通サービス理解・利用促進</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>新潟県内複数箇所</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>地方新聞社の情報発信力やネットワークを活かし、「日本版ライドシェア」や「デマンド交通」への理解と利用を促進します。運転手募集セミナーやアプリ講習会も開催します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>ドライバー不足、利用者の認知不足、アプリ導入のハードルなどにより、新しい交通サービスの利用が伸び悩んでいます。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>全国地方新聞社連合会、新潟日報社 他</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>⑧ バス・鉄道事業者による日本版ライドシェアへの参画</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>東京都、沖縄本島、兵庫県豊岡市、鹿児島県指宿市 他</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>地域のバス・鉄道事業者が運行主体となり、日本版ライドシェアに参画します。バス・鉄道ダイヤに合わせた柔軟な運用を目指し、先行トライアルを実施します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>バス路線の代替、終電・終バス後の需要、観光の季節変動などに対応するため、バス・鉄道事業者からライドシェアへの関心が高まっています。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>東急バス、東京バス、全但バス、いわさきコーポレーション、伊予鉄グループ</p>
+                    </div>
+                </details>
+
+                <details class="project-card">
+                    <summary>⑨ カーシェアリングによる地域の法人車両活用プロジェクト</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>長野県上田市、長野市、松本市</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>夜間や休日に使われていない法人の商用車などを、地域の来訪者等が利用できる新たなシェアリングサービスを開発します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>観光地などで二次交通やレンタカーが不足している一方、法人の車両が遊休資産となっており、これを活用できる可能性があります。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>株式会社TRILL 他</p>
+                    </div>
+                </details>
+
+                <h3>3.4. 観光二次交通や情報発信の充実 (1件)</h3>
+
+                <details class="project-card">
+                    <summary>⑩ 訪日外国人への「観光の足」の情報発信</summary>
+                    <div class="details-content">
+                        <h4><span class="label">実施地域</span>全国複数箇所</h4>
+                        <h4><span class="label">概要</span></h4>
+                        <p>訪日外国人向けガイドサービス「LIVE JAPAN」を活用し、観光地へのアクセス情報を分かりやすく提供します。MaaSやライドシェアなどの多言語記事も制作し、交通に関する不安を解消します。</p>
+                        <h4><span class="label">背景</span></h4>
+                        <p>訪日外国人にとっての交通手段の分かりにくさ（交通空白）が課題となっており、快適な旅行のためには、運営側の受け入れ整備と利用者への情報発信の両方が必要です。</p>
+                        <h4><span class="label">参加組織</span></h4>
+                        <p>株式会社ぐるなび 他</p>
+                    </div>
+                </details>
+            </section>
+            
+            <section id="tenbou">
+                <h2>4. 今後の展望</h2>
+                <p>これらのプロジェクトは、実証を通じて得られた課題や成果を広く共有し、全国展開を推進することで、日本各地の「交通空白」解消に貢献することが期待されます。特に、多様な関係者との連携・協働による「新しいカタチ」の地域交通モデルの構築が目指されています。</p>
+            </section>
+
+        </main>
+
+        <footer>
+            <p class="issuer">発行元</p>
+            <p>国土交通省</p>
+            <ul>
+                <li>総合政策局 地域交通課</li>
+                <li>総合政策局 モビリティサービス推進課</li>
+                <li>物流・自動車局 旅客課</li>
+            </ul>
+        </footer>
+
+    </div>
+
+</body>
+</html>
