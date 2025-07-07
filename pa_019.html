@@ -1,0 +1,246 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f1f2f4] px-10 py-3">
+          <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-[#121416]">
+              <div class="size-4">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+              </div>
+              <h2 class="text-[#121416] text-lg font-bold leading-tight tracking-[-0.015em]">Moto Parts</h2>
+            </div>
+            <div class="flex items-center gap-9">
+              <a class="text-[#121416] text-sm font-medium leading-normal" href="#">Home</a>
+              <a class="text-[#121416] text-sm font-medium leading-normal" href="#">Parts</a>
+              <a class="text-[#121416] text-sm font-medium leading-normal" href="#">Accessories</a>
+              <a class="text-[#121416] text-sm font-medium leading-normal" href="#">Contact</a>
+            </div>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <label class="flex flex-col min-w-40 !h-10 max-w-64">
+              <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                <div
+                  class="text-[#6a7581] flex border-none bg-[#f1f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                  data-icon="MagnifyingGlass"
+                  data-size="24px"
+                  data-weight="regular"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  placeholder="Search"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#121416] focus:outline-0 focus:ring-0 border-none bg-[#f1f2f4] focus:border-none h-full placeholder:text-[#6a7581] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                  value=""
+                />
+              </div>
+            </label>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#f1f2f4] text-[#121416] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-[#121416]" data-icon="ShoppingCart" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </header>
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[920px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-[#121416] tracking-light text-[32px] font-bold leading-tight min-w-72">Parts Catalog</p></div>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCTGwb7fwXiZ7Rn6Oj4ILxDLJYBCdqIltCnGLjSRZ70D4DmBEVgv3Pq4Bc2CAydpO2erM5976Im7aI8VepCloTvlwvpXq2-O2aEs3nZ9DPwyxAF13CJuuOVRuUG_5qtwJpmojErEF0hIQ_ED4hVpheMj8lNm2BICX9YBRc34SfkRX6TsoVyyWf9Gd3yikzwOIjX_nApcSxwCZfRpzvTGjW-ViCqAaHV-GTRMTqNSyaAIJgMEBTc5PTi8olha4ujfunNsRDqHgVqEM3p");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCv7zyBj4didGspO10MqhrvN467ni4Qu8uOBMAC1j2M7oQ9O6URTPB5pQdJeyh86a12ufZYrZSM91NHZmCdfSmbFiOIl-2guvxXaXFipre-0mJSkCg9EK7uVuZ5h7zLj7CjLe53ys3E5KR55T0aKAvm-6EnGOzqrcZ6Q6MgAXJHHAVKDgUsdSqIa-4h1sUxXLoOX41zSe0P6gGrbJ13NU5BkgN6ahTL_L7AEsMssrfbebhcXE53KLt41u-4yj5LyRV6PDfjc187WJ3g");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpCwMLF6IWMNWmxi2RViOnQRaIiFlhxu0jYDrXvHjW0M8jWq5Iz5w_-5idc2ISLbxs5-iA7ghx9MxkzB4MDAm1gsfVZ8O_CvUUmi1XxFnAmVc4Izl54H1r8is6g-9RfJ8ukptIsF1pRRkRorFon1NV8QFLU5HOotigaSFeiEl-IK4t_w4fehDJ6wDVa-x4p29-FVvf4U3q9gJIZ41Do7iGipT2m22IfXP26METVu0LsGQ477YrrU_x5BRaX5GrGlrtS9v3z73pRNF2");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBaXr5qhJMZmwXYyltgHMdBGbu5XZwTPARBNlcW57qZLFDCiarFK_-SQGHXO-oJcugsd8fzeUFdbxSdaaXLHb9T3sl10tUhV1DB8h3TQZQO7-XgnIGVgeuupO_7_jo-rhidB4-py5daiN7NvJIY5tN-iaZ_9jwJFLt_0CNlbgbeH3TPiPVNxDTP4RMcPJ6zVG0H8C0Gmk5gbcB31knKfyddi3at-T5zvItPOomsy-T66gdkdR8RTdvh9wCi8HTaKwP2H_PZan7BVLu");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA48N9z8j-3DaNb8PwNP6TaLzN454zqcSlFTu0q7qYMleCBPJJisquQPcxPObolHUlyYJjcNf2Vco9Z-dJLZyALVu7wXy8kA4GmfTNSdIrfU2RlWv8rU2x3Ry_iVAVObHYYvauOpQsyuCKIzGV6Ww-4_MRDmlwJpBZq9ThaEn52g4k8Q6wA-1wM3CSs2LjevE1_Yzh_3-AfHYdzBXQPzEq_sCHUIl0vwAj-v58tSWVIvn_gtqck6fDe237rZkiEjc26FMtyrFvW7a5b");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC8Ts8NKIhJ_9ZUPugAtpM6JL-4IO27txy14y3_-3u4KkJrEkQb9aKlfcxunkokJAnUHdjY7Hf6M7QC7dpOYGPuJmHWpMMclYuedKVS8Gl2AdB2gDUdaJg8lx-iubqQ8n6kOO0YghcGcNDI_XJNcBN3CQ4WWakdRAUabHi7fMLxLA0uN7a65b3nXBIONOLg_Vy6erNSHGApmKT3BA7dcHL0DWylF1GjMSWmEJ6SKRljqLoPy4OaghURu4EWHlSoNr5yu1PmNdCqCpdg");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCV-fW6DvkV4gZNH_n5_pUuzUwen-B_iGgRHeu8CoinnnMOKq22LKbLHzSAQ0GQoMqmV1KT_nOem1_XHQdrKvN8d_7GDy7a6hlo_mPp74ONv7KQXimL5_o2mxrFCo9adAPjNF1r6p58JyY3Oh6aaHsKvEkkvSPhDW4vvklXMg8O14MIrmSNQdPxgTvqKDaN27eEqstQyP41VOFWLJrEq-l7JtsjPBDVqWyTJI9ZYyESETFaRRbaOEAJpdJgYHL5BZsT2dJQTGqPd23");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXEMoqfiIW45CeczjkXc5sgfW5gEHiKarhVE93SB0wLylZFZEhc_32Kk18bn1CVCYE7f32ReKm6KE6NRzIzgN2HDRfqpijTWgwhUfBG3FioquwXVKJmBBt87Q9PizWcBShosIEHoNGzR27nptSm-im9Bi_EthqlGOLyCjxr2OlOh_U7iZc2EsoLMxvwKLKjI07AwvyhA9L2zbZyKFbwk8W4cCj3mHnL482Qz5VR4fnS3R4WR-1VowDik-8FQEqaDbdrbyGJWfg1RVJ");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhvpM7rMkzTs5dJGaJzR0XP1KST38G_MTu90NId1wG-NmLzyF6s1NzUBXLpN5eGPfxNJOWFHfTCrO1XJukUN_MCV3d6odXETNqTrLF93wgWPtoZFTPUQiJ-h0i3Cp1xoUA_kyUPJX0Li0PHZ1s5gyW8cfPQIq3kegPUXuXSGQnaa1hJIYisTzyDD5jjjEmqTmJ8hMwgXlzJznf6Oqh7d8Y3LS8l-7j-_eMRVwtBTxu7mA8HohYR3amWlFdtW-OGNJYlrx9TSb3YtFZ");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAk9MRQHsgyRsrBrGPj-jaPVb9yzm3F3nOvYe-Q7Y42LoWY5t_zCcW0Se0meEEf-m79qWWyqeKjKrzgHPev52EgA79kQUBi_hjme2LrPjf_nY3Yp-4rrXq3pfiGNm4NbreC5t5NB4k3OkUVGEHdQJUqu1F7VzhVezeTzuFm0Rwj_IyQGlU1YoQM-YYIb2RCjLaRVSZmoRK5ps5tYtw27Scmg7-imk9XJkkqSsmogoyayHbLNw0KweGi06RkYRBXWWgAiCTzPdRe37dM");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbEzHKKBb3z9tUm5ogH2n7LRf_p5oY-WBHOQBDi6uGy-vw98TEYuQB6Cw9BBxewZ0Ie1O9ci-0De1fyI8V5lgcx_54Kasw9KZQy1kX2kTQ4tS0NP8q4rPIhxRevpvYxU5_JJufGwOTCSlQ_ns4Y1IcaD6n0b-xG848IuZVo3qHRx1BzPHeRmMCVZdJi7QztIVj_xy8HKejQuAOSOCphqiwbMLKwJX3tcuDGyVngQDvZFSNyR1TCck1E9Vr9ibwloGM8KLR7dIR2L3x");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB36QzTXGWnh9bqf6GPTn1vquLLnayjoTJHTVX5mb10rjsrrrQupms20Lmhz-yelqzQpIW-0lJhCyQhnn4lbRlAadVZD5LkvZPhpGxTX7pAJEP_mUfJ7suaOBz98cOBLODL43ebu9Dsa38Kq5dwMb2vCbReAF3rrthgU1gDNHpqlPJVGY-wQg9WMaP1NjvzBGmpg2iQ6SrchEONx6Q2Xvk6Ubxw1ebYw5g9oDthZXabNt85Io5s1QHTvhQtO-Dm4LfMqy1v8qP0P3eN");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlU7qPxsq2Tqr7fPXtSH8aN77hogchFiHM8c_f3lCkz2nrmkzdyuArh_XGw7KUCvUZnQtCHFMuZyuXcKs-9sgqqWxnVtqjKiH0PYleMm71vr-8vELkfa1Qs8VKEjbrboviOgBl_WDtKZHkvIPx4Vi-7KJegYpLcj0qNzvPONLuyVDDQxN_STOm7SboekAEmOXrwsH6UeUQg7A084SBo0ccbZ6pYqekNXph1kpD-gWkdrOqMzBbjBQraGJYhgdtVkOQCiICj7u38GEv");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPDvLRLVwMn8S-DFGmFIFidaBcSCkF5Fm80rFiMQ5qQfcU6GtcDCQ0Pq6blzFdzQJxRz4za9nHj7QuTGEi-bT_Z4Za26zoHwVUipuFfAM_CMIOzA7dyvBafFtJ_kAMuimZLD_wI8lsXFg1pgNBzX0mnmJER845ynxMz8nLXmcmTkVb11fD9HUdcHzVadK8_Jo5XNBIopWNhCaQQubhQMU5bbYj34-IDkSs4WhTWWQ_qAeB7ZiRxZZtwCRVIb9DoGaiTJckeGmdVnuD");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqbG46ThVVa2BTrIEJT6LxRrhyLoNq8jUdoq31oifx6rdaHA4xxzeOAgkQ95Z2I-ZcNML2-braTu3DD4yrsbTRm_fx6srvJYsJuqYYxmnreO_FNPOXjbQHaza8I4ltnjdcamVhWZe6mfVo1ndukjOQ8MQwjVy4zJYfS3ieIiDSKiP4CRDUeLGBXLvbhq8h7gJbrpHLGSVPkWCK7zAKiGWQKBY85MDaC125pSX0BjPyeVP2xkbKUMQ43yHQdc7dCEdLrIrFZ8oEMCIE");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjIcVAlIz-Z6pWrWKjRnlEzcY3iisYUGBfmRHrCAEm07rTMe7NGDWLFBREpXITc_3p8yosimP4-H2-9kKUSjnoes-13sO5Jkih9OGeVFT4j6wQBgH1UEgcRMCwXjVIpeBlCJ8GwWabX91Q72hJ1k6jZOrBLceeHoQO8KQNEJq3bjunVxCWZolMKHzluPJ4AqUgKrQHkDooDAMPVIden74k4_9uoL9Zm-AYy5OCr-10SgBhKfGW82tloImAg7NntVlkhZkMGhHFsObu");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWOw9l4_zNIOBYvdNRKrKO9oRocYZUT9gcdbp69nzabT13PWnyIhO7mTwe3V0x4UarbuPtWiIj_O5-m0cSHRzQHGN2mJJkI1_A3bF1k4R9XmCyyRtlz3M-c4IE6nq6-OKeydS-cHpcVpMdvQA0dg0uCzsBvRKQAnBVxVgsyhEXxxrltilkzjm7wvQiin3t3eybjnRWVoFbGJcS_GZPtdAh8Oev9-PLMSFTdtJuuFIFudZZMqbekfOFV0NuRqbcqhHdopz5Yqt19LUX");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgjz9u6uPlW6dUCzId5xkqu7wVfcRCwG5uzMfjnWKX3nfNZbRjTZankvMySz7M9m_H0XOh5g8rzZT4ptzlG-pLmHPFeim1IAP2MnE9AuEBGJEJE1PJ9clxKsqqSES48RLzBjS-syYjtlGoTEbgigu_5fydRwZq1d3e7xm6WDEKMOR0PGNQCGxhqUeLin7R2Js94LktccYNY0scvKkxhHGF_CAuHztbWQ-HIZBqlhzb5qN4mp3cTDq1DuGpx_vFN0PIu9TOxSoyimwx");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCNxGKMmquPatBLR30fCUoPRnxa2AvDszLr_F38PgUAwDpLc8MC6jOy3jZ7iLDukuPQsUvH_cf1Q99IrVelzD9SXLxNGCdf7AFMASmZE56pu1RPt0QFkrK9v583rjlRQMp9O1PFtoowRsIEbvSSnsJgFxcbeOA_ZpC3Du5lteWLObXq9dPLOAucYQNYbgvaF-Bjg0ltL2gCtvQybrNAiBKsjLghdq5VdU0MoLHdPGQB9qOO0R6wJwYQ5dQVrkHxtcxyK2bndx7UwYFS");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUw3jTckmguL1uNtjkEHOG64qXmJHnXx_2UtkzSArDA0hYWfeDH7LxVBpaG5RVql-KBxndN6lw8gFT5pIjGjN5mn2xnmkrzTx51gvEjWyMEGZp6R9eWo_WxGasPV3fBXSUFHavgc5eJ2Gz4o4mC1LUwQWmbyMjYbIF9kvqFAccldlV8T5x1GPXnog3q_xuxuDZ6ML1T7O6Abip7EawbdYxvUqE8AZTvbYFPtIXQ7i_dXUyk65za6vgAxNSg7NksR7O93M1QsU4ZOtJ");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBuch5GY9ke4j7fqBOyQbaEPSgb0B0LOOzvxYnowmJJPvv9MjecQ2Ilcy7IOd5EFrjLLxwbFk1zqrL3XKkdRKpM-M0cGt1ZZ3Si_YY0kkIAmKWbNVTpTnn-Hb7j-ODvna7f3lJ-Ug7iwTVjvJZODQNKqiqCAaK46T8uJ9Yp27x0qUxTicll_jT3BNOCLwn5mbM2jGQ0YpBreQBxWXd4lwN56LWQNJ2lu5w3kCm-7b_bhFtwV1L_o80ry7ncTlNa7JvRAXEJRgnS-PE5");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtr-62vseybNMsrFTw0LxfrstSqPYDYVCHnritrIydgDh4XMo8a35_oTPzVwhS5n890WekPqvpUqn6y-HPCQGM-2wiOgoMIT9CKRWTw29Xtk6bLB6bPIXbWWZcrf68cHpRsKXYdYPJYdKNXM818CCESEs67Re9Zq3qIohXaL1DFYoCqK5u45kXxBTm_PFVXN3uK9nX0lgzMvDljMZTTve8rZT3k_1W8ORkhZVcOA615L8uFqW4XVUx-ScM1vclqxa1pClmud-Tr5_s");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDNlqrh1W62Vfpx7ehQYT7bGSfiFXCbnvBh_xexMLmnzoj6IG_dCOeiYiqC7Zgmvckp3yVAPCbA4fBVzX-GVakHfwDGS1AMo8qSkONQxsTE3ygkoLXkROT-LfoqasArKgT-K04ngTnzUifmiwbYSFmiodoJOqnWSs_qmyGqa57acss3OHM-5kwmmV_MYmGUwKnnK0fz-nHamIZi1RlDs3CcWgnr2AkEEo_NC6hBv8-KKZz6sarDQcERPffyUgnpX5AMJ_rVsmLrOFV");'
+                ></div>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9j5EHxQtSWnCN9AltQKS1Rm1etMqsRSg8LadYFrXa2jECAIXYYOXzlGobIRPBYUZUfKeiY4A82g7TgcWy9e3dHmSkyxDWYNjjf7mUHpf69KNfXhq2wjeGChnmkfyXjenJO_V2Ye4AeHuaXCHjYZYftT1a3SMpR7sUIOqi5WpbjNsplIV-eU8-yg7ArcgfA813PhlCVSSdeBs8p1j4ghZAHsFg1BHByD2T05p-5IxNzMlY8Snowdrexs6DYBaRxu00zYZ_07wyb7aG");'
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="layout-content-container flex flex-col w-[360px]">
+            <div class="p-4 @container">
+              <div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQo4XG9WkJXxnBfw_k3NjvcsH7Ljg5NsItEeVdf0wGHTQCTXeLRFEowwn1jDK55-F-fpGLC59ijiogVWgxt5uSgAR5FY8TCQ__59k6Sd6IoFh_HMaqDavxI757EmzdlUz5bRnOWab0y5eqWoLDGULiBZfKHhVetXFUzATG7fLCg5sVspyRl5H6SzZlJ7ze4M_4tz-dk5FbBn3P9E91QIg7Sk-IxoHxVN_aZOKgZIkkA6Q8063kHZCROz57kKoqFiftR6E8Wmfte4t0");'
+                ></div>
+                <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4">
+                  <p class="text-[#6a7581] text-sm font-normal leading-normal">Selected Part</p>
+                  <p class="text-[#121416] text-lg font-bold leading-tight tracking-[-0.015em]">High-Performance Brake Pads</p>
+                  <div class="flex items-end gap-3 justify-between">
+                    <p class="text-[#6a7581] text-base font-normal leading-normal">
+                      Enhance your bike's stopping power with these premium brake pads. These brake pads are engineered for superior performance, offering enhanced stopping power
+                      and improved control in all riding conditions. Crafted from a high-friction compound, they provide consistent braking performance and reduced fade, ensuring
+                      safety and reliability. The durable construction extends their lifespan, making them a cost-effective upgrade for any motorcycle enthusiast. Installation is
+                      straightforward, allowing for a quick and easy improvement to your bike's braking system. Experience the difference with these high-performance brake pads,
+                      designed to meet the demands of both everyday riding and spirited adventures.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
