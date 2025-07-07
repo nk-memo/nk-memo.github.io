@@ -293,10 +293,10 @@
                 shinkansenProgress.style.width = `${progressPercentage}%`;
                 shinkansenIcon.style.left = `${100 - progressPercentage}%`;
                 
-                progressText.textContent = `現在地: ${Math.round(progressPercentage)}%`;
+                progressText.textContent = ``;
                 
                 if (progressPercentage >= 100) {
-                    progressText.textContent = '🚅  新大阪に到着！ 今月もお疲れ様でした 🎊';
+                    progressText.textContent = '🚅  新大阪に到着！ お疲れ様でした 🎊';
                 }
             }
 
