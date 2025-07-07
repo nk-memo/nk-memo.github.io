@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ラジオ体操カード</title>
+    <style>
+        /* --- 全体のスタイル --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            background-color: #eaf4ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+        }
+
+        h1 {
+            color: #2a4a7d;
+            border-bottom: 3px solid #ffde59;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        h2 {
+            color: #2a4a7d;
+            margin-top: 40px;
+        }
+
+        /* --- YouTube動画のスタイル --- */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9のアスペクト比 */
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* --- カレンダーのスタイル --- */
+        #calendar-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 30px 0 10px;
+        }
+        .calendar-container {
+            margin-bottom: 50px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-cell {
+            padding: 5px;
+            border-radius: 5px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .day-header {
+            font-weight: bold;
+            background-color: #d0e4fe;
+        }
+        .day {
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .day:hover {
+            background-color: #e0e0e0;
+        }
+        .saturday { color: #0000ff; }
+        .sunday { color: #ff0000; }
+        .today {
+            background-color: #fffacd;
+            font-weight: bold;
+            border: 2px solid #ffde59;
+        }
+
+        /* --- スタンプのスタイル --- */
+        .stamped {
+            background-color: #ffe4e1;
+        }
+        .stamped::after {
+            content: '済';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 5px solid #dc143c;
+            border-radius: 50%;
+            color: #dc143c;
+            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            font-size: 1.8em;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(-15deg);
+            background: rgba(255, 255, 255, 0.6);
+            line-height: 1;
+        }
+
+
+        #shinkansen-container {
+            width: 100%;
+            margin: 20px auto 0;
+        }
+        #shinkansen-track {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background-color: #b0c4de;
+            border-radius: 5px;
+        }
+        #shinkansen-progress {
+            position: absolute;
+            right: 0; /* 右から開始 */
+            height: 100%;
+            width: 0%; /* JSで変更 */
+            background: linear-gradient(90deg, #00c6ff, #007bff);
+            border-radius: 5px;
+            transition: width 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        #shinkansen-icon {
+            position: absolute;
+            top: 50%;
+            left: 100%; /* JSで変更 */
+            transform: translate(-50%, -50%); /* 向きは反転させない */
+            font-size: 28px;
+            transition: left 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+            text-shadow: 0 0 3px white;
+        }
+        #station-names {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 5px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        #progress-text {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007dc3;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ラジオ体操カード</h1>
+        
+        <div class="video-wrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/PBRGLbrlUEk?si=nK7DzpNMiNFaXrSP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        
+        <div class="calendar-container">
+            <div id="calendar-header"></div>
+            <div class="calendar">
+                <div class="calendar-cell day-header sunday">日</div>
+                <div class="calendar-cell day-header">月</div>
+                <div class="calendar-cell day-header">火</div>
+                <div class="calendar-cell day-header">水</div>
+                <div class="calendar-cell day-header">木</div>
+                <div class="calendar-cell day-header">金</div>
+                <div class="calendar-cell day-header saturday">土</div>
+            </div>
+            <div id="calendar-body" class="calendar"></div>
+        </div>
+
+        <h2>新幹線メーター</h2>
+        <div id="shinkansen-container">
+            <div id="shinkansen-track">
+                <div id="shinkansen-progress"></div>
+                <div id="shinkansen-icon">🚅</div>
+            </div>
+            <div id="station-names">
+                
+            </div>
+        </div>
+        <div id="progress-text">現在地: 0%</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarHeader = document.getElementById('calendar-header');
+            const calendarBody = document.getElementById('calendar-body');
+            
+            const shinkansenProgress = document.getElementById('shinkansen-progress');
+            const shinkansenIcon = document.getElementById('shinkansen-icon');
+            const stationNamesContainer = document.getElementById('station-names');
+            const progressText = document.getElementById('progress-text');
+            
+            const STORAGE_KEY = 'radioTaisoStamps_GachapinMukku_v5'; // バージョン更新
+            
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth();
+            
+            let stampedDates = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+            
+            const stations = ['新大阪', '京都', '米原', '岐阜羽島', '名古屋', '豊橋', '浜松', '静岡', '熱海', '新横浜', '東京'];
+
+            function setupShinkansenMeter() {
+                stationNamesContainer.innerHTML = '';
+                stations.forEach(station => {
+                    const stationEl = document.createElement('span');
+                    stationEl.textContent = station;
+                    stationNamesContainer.appendChild(stationEl);
+                });
+            }
+
+            function generateCalendar() {
+                calendarHeader.textContent = `${currentYear}年 ${currentMonth + 1}月`;
+                calendarBody.innerHTML = '';
+                
+                const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                
+                for (let i = 0; i < firstDayOfWeek; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-cell';
+                    calendarBody.appendChild(emptyCell);
+                }
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayCell = document.createElement('div');
+                    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    dayCell.className = 'calendar-cell day';
+                    dayCell.textContent = day;
+                    dayCell.dataset.date = dateStr;
+                    
+                    const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+                    if (dayOfWeek === 0) dayCell.classList.add('sunday');
+                    if (dayOfWeek === 6) dayCell.classList.add('saturday');
+                    
+                    if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                        dayCell.classList.add('today');
+                    }
+                    
+                    if (stampedDates.has(dateStr)) {
+                        dayCell.classList.add('stamped');
+                    }
+                    
+                    dayCell.addEventListener('click', () => toggleStamp(dayCell, dateStr));
+                    calendarBody.appendChild(dayCell);
+                }
+                
+                updateShinkansenMeter();
+            }
+            
+            function toggleStamp(cell, dateStr) {
+                if (stampedDates.has(dateStr)) {
+                    stampedDates.delete(dateStr);
+                    cell.classList.remove('stamped');
+                } else {
+                    stampedDates.add(dateStr);
+                    cell.classList.add('stamped');
+                }
+                
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(stampedDates)));
+                
+                updateShinkansenMeter();
+            }
+            
+            function updateShinkansenMeter() {
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const currentMonthStamps = Array.from(stampedDates).filter(d => d.startsWith(`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`)).length;
+                
+                const progressPercentage = daysInMonth > 0 ? (currentMonthStamps / daysInMonth) * 100 : 0;
+                
+                shinkansenProgress.style.width = `${progressPercentage}%`;
+                shinkansenIcon.style.left = `${100 - progressPercentage}%`;
+                
+                progressText.textContent = `現在地: ${Math.round(progressPercentage)}%`;
+                
+                if (progressPercentage >= 100) {
+                    progressText.textContent = '🚅  新大阪に到着！ 今月もお疲れ様でした 🎊';
+                }
+            }
+
+            // 初期化
+            setupShinkansenMeter();
+            generateCalendar();
+        });
+    </script>
+</body>
+</html>
